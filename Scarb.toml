@@ -10,7 +10,15 @@ sierra-replace-ids = true
 pixelaw = { git = "https://github.com/pixelaw/game", branch="dev" }
 #pixelaw = { path = "../game/contracts" }
 
+
 [[target.dojo]]
+build-external-contracts = [
+    "pixelaw::core::models::pixel::{pixel, Pixel, PixelUpdate}",
+    "pixelaw::core::models::registry::{app, app_name, core_actions_address}",
+    "pixelaw::core::models::permissions::{permissions}",
+    "pixelaw::core::utils::{get_core_actions, Direction, Position, DefaultParameters}",
+    "pixelaw::core::actions::{actions, IActionsDispatcher, IActionsDispatcherTrait}"
+]
 
 [tool.dojo]
 initializer_class_hash = "0xbeef"
