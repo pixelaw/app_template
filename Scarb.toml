@@ -7,7 +7,7 @@ version = "0.0.1"
 sierra-replace-ids = true
 
 [dependencies]
-pixelaw = { git = "https://github.com/pixelaw/game", branch="dev" }
+pixelaw = { git = "https://github.com/pixelaw/core", branch="refactor/dynamic_app_info" }
 #pixelaw = { path = "../game/contracts" }
 
 
@@ -22,6 +22,10 @@ build-external-contracts = [
 
 [tool.dojo]
 initializer_class_hash = "0xbeef"
+
+[scripts]
+# initializes the actions
+post_deploy = "./scripts/default_auth.sh"
 
 [tool.dojo.env]
 rpc_url = "http://localhost:5050/"
