@@ -19,6 +19,11 @@ struct LastAttempt {
 }
 
 const APP_KEY: felt252 = 'hunter';
+const APP_ICON: felt252 = 'U+1F946';
+
+/// BASE means using the server's default manifest.json handler
+/// This could also be an ipfs link
+const APP_MANIFEST: felt252 = 'BASE/manifests/hunter';
 
 #[dojo::contract]
 mod hunter_actions {
@@ -35,7 +40,7 @@ mod hunter_actions {
         IActionsDispatcher as ICoreActionsDispatcher,
         IActionsDispatcherTrait as ICoreActionsDispatcherTrait
     };
-    use super::APP_KEY;
+    use super::{APP_KEY, APP_ICON, APP_MANIFEST};
     use pixelaw::core::utils::{get_core_actions, Direction, Position, DefaultParameters};
 
     use debug::PrintTrait;
@@ -48,7 +53,7 @@ mod hunter_actions {
         fn init(self: @ContractState) {
             let core_actions = get_core_actions(self.world_dispatcher.read());
 
-            core_actions.update_app_name(APP_KEY);
+            core_actions.update_app(APP_KEY, APP_ICON, APP_MANIFEST);
         }
 
 
