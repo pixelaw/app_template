@@ -14,7 +14,7 @@ mod tests {
 
     use dojo::test_utils::{spawn_test_world, deploy_contract};
 
-    use pixelaw::apps::myapp::app::{
+    use myapp::app::{
         myapp_actions, IMyAppActionsDispatcher, IMyAppActionsDispatcherTrait
     };
 
