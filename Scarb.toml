@@ -22,9 +22,14 @@ build-external-contracts = [
 initializer_class_hash = "0xbeef"
 
 [scripts]
-# initializes the actions
+# for deploying to demo katana
+deploy_demo = "sozo migrate --name pixelaw --rpc-url https://katana.demo.pixelaw.xyz/"
+initialize_demo = "bash ./scripts/default_auth.sh https://katana.demo.pixelaw.xyz/"
+upload_manifest_demo = "bash ./scripts/upload_manifest.sh https://demo.pixelaw.xyz/manifests/"
+
+# for local deployment
+deploy = "sozo migrate --name pixelaw"
 initialize = "bash ./scripts/default_auth.sh"
-# upload manifest to default manifest.json handler
 upload_manifest = "bash ./scripts/upload_manifest.sh"
 
 [tool.dojo.env]

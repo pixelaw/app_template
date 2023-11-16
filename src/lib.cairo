@@ -18,15 +18,15 @@ struct LastAttempt {
     timestamp: u64
 }
 
-const APP_KEY: felt252 = 'hunter';
-const APP_ICON: felt252 = 'U+1F946';
+const APP_KEY: felt252 = 'sample';
+const APP_ICON: felt252 = 'U+263A';
 
 /// BASE means using the server's default manifest.json handler
 /// This could also be an ipfs link
-const APP_MANIFEST: felt252 = 'BASE/manifests/hunter';
+const APP_MANIFEST: felt252 = 'BASE/manifests/sample';
 
 #[dojo::contract]
-mod hunter_actions {
+mod sample_actions {
     use poseidon::poseidon_hash_span;
     use starknet::{
         get_tx_info, get_caller_address, get_contract_address, get_execution_info, ContractAddress
