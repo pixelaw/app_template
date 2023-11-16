@@ -14,7 +14,7 @@ name = "dojo_plugin"
 version = "0.3.10"
 
 [[package]]
-name = "new_game"
+name = "myapp"
 version = "0.0.1"
 dependencies = [
  "pixelaw",

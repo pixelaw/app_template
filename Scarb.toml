@@ -1,6 +1,6 @@
 [package]
 cairo-version = "2.3.0"
-name = "new_game"
+name = "myapp"
 version = "0.0.1"
 
 [cairo]
