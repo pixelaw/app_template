@@ -22,7 +22,7 @@ echo actions : $ACTIONS_ADDRESS
 echo "---------------------------------------------------------------------------"
 
 # enable system -> component authorizations
-COMPONENTS=("LastAttempt")
+COMPONENTS=($(cat ./target/dev/manifest.json | jq -r '.models[] | .name'))
 
 echo "Write permissions for ACTIONS"
 for component in ${COMPONENTS[@]}; do

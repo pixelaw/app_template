@@ -7,7 +7,7 @@ version = "0.0.1"
 sierra-replace-ids = true
 
 [dependencies]
-pixelaw = { git = "https://github.com/pixelaw/core", branch = "main" }
+pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.0.6" }
 
 [[target.dojo]]
 build-external-contracts = [
@@ -22,13 +22,6 @@ build-external-contracts = [
 initializer_class_hash = "0xbeef"
 
 [scripts]
-# for deploying to demo katana
-deploy_demo = "sozo migrate --name pixelaw --rpc-url https://katana.demo.pixelaw.xyz/"
-initialize_demo = "bash ./scripts/default_auth.sh https://katana.demo.pixelaw.xyz/"
-upload_manifest_demo = "bash ./scripts/upload_manifest.sh https://demo.pixelaw.xyz/manifests/"
-
-# for local deployment
-deploy = "sozo migrate --name pixelaw"
 initialize = "bash ./scripts/default_auth.sh"
 upload_manifest = "bash ./scripts/upload_manifest.sh"
 

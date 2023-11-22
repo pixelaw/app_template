@@ -11,7 +11,10 @@ trait IMyAppActions<TContractState> {
     fn fade(self: @TContractState, default_params: DefaultParameters);
 }
 
-const APP_KEY: felt252 = 'MyApp';
+const APP_KEY: felt252 = 'myapp';
+const APP_ICON: felt252 = 'U+263A';
+/// BASE means using the server's default manifest.json handler
+const APP_MANIFEST: felt252 = 'BASE/manifests/myapp';
 
 #[dojo::contract]
 mod myapp_actions {
@@ -27,7 +30,7 @@ mod myapp_actions {
         IActionsDispatcher as ICoreActionsDispatcher,
         IActionsDispatcherTrait as ICoreActionsDispatcherTrait
     };
-    use super::APP_KEY;
+    use super::{APP_KEY, APP_ICON, APP_MANIFEST};
     use pixelaw::core::utils::{get_core_actions, Direction, Position, DefaultParameters};
 
     use debug::PrintTrait;
@@ -44,7 +47,7 @@ mod myapp_actions {
     // ARGB
     // 0xFF FF FF FF
     // empty: 0x 00 00 00 00
-    // normal color: 0x 00 FF FF FF
+    // normal color: 0x FF FF FF FF
 
     fn encode_color(r: u8, g: u8, b: u8) -> u32 {
         (r.into() * 0x10000) + (g.into() * 0x100) + b.into()
@@ -66,7 +69,7 @@ mod myapp_actions {
             let world = self.world_dispatcher.read();
             let core_actions = pixelaw::core::utils::get_core_actions(world);
 
-            core_actions.update_app(APP_KEY, '', '');
+            core_actions.update_app(APP_KEY, APP_ICON, APP_MANIFEST);
 
             // TODO: replace this with proper granting of permission
 
