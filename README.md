@@ -29,7 +29,7 @@ sozo test
 There are multiple ways to have a local copy of PixeLAW core for development:
 
 ##### Using Docker Compose (Recommended)
-This is the easiest way to get PixeLAW core up and running. There is a docker-compose file in this repository specifically for running a local image
+This is the easiest way to get PixeLAW core up and running in http://localhost:3000. There is a docker-compose file in this repository specifically for running a local image
 of PixeLAW core. 
 
 ###### Prerequisites
@@ -51,7 +51,7 @@ The following script will create the docker network for the container to run in:
 ````console
 docker network create --driver bridge pixelaw
 ````
-And this will run the actual container:
+And this will run the actual container in http://localhost:3000:
 ````console
 docker run -d --name pixelaw-core -p 5050:5050 -p 3000:3000 -p 8080:8080 -p 50051 --restart unless-stopped --network pixelaw oostvoort/pixelaw-core:v0.0.6
 ````
