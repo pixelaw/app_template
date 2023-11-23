@@ -62,8 +62,15 @@ manually. Refer to the [GitHub repository](https://github.com/pixelaw/core) for 
 
 ---
 Whichever way you've chosen to start up PixeLAW core, it will take a while for all the core contracts to get deployed
-and start running. Wait until http://localhost:3000/manifests/core stops returning NOT FOUND. After which you can start
-deploying your app onto your local PixeLAW via:
+and start running. Wait until http://localhost:3000/manifests/core stops returning NOT FOUND. To check if you can
+start deploying your app, use the following script (this will print out "Ready for app deployment" when the core
+contracts have finished initialization):
+
+````console
+scarb run ready_for_deployment
+````
+
+After which you can start deploying your app onto your local PixeLAW via:
 
 #### Building your contracts
 ````console
