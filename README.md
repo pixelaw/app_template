@@ -24,34 +24,65 @@ sozo test
 ````
 
 ### Local Development
+
 #### Run [Pixelaw/core](https://github.com/pixelaw/core)
-There is a docker-compose file in this repository specifically for running a local image
-of PixeLAW core. Running the following command will run core in a container.
+There are multiple ways to have a local copy of PixeLAW core for development:
+
+##### Using Docker Compose (Recommended)
+This is the easiest way to get PixeLAW core up and running. There is a docker-compose file in this repository specifically for running a local image
+of PixeLAW core. 
+
+###### Prerequisites
+1. [Docker](https://docs.docker.com/engine/install/)
+2. [Docker Compose plugin](https://docs.docker.com/compose/install/)
+
+Running the following command will run core in a container.
 ````console
 docker compose up -d
 ````
-It takes a while for all the contracts to get deployed and initialized once it does start running.
-Once it has finished initializing and deploying all the core contracts, you can now deploy your app onto your local PixeLAW. 
-This can be done via:
 
-##### Building your contracts
+##### Using Docker
+Another way to go about it is by using the Docker engine by itself. 
+
+######
+1. [Docker](https://docs.docker.com/engine/install/)
+
+The following script will create the docker network for the container to run in:
+````console
+docker network create --driver bridge pixelaw
+````
+And this will run the actual container:
+````console
+docker run -d --name pixelaw-core -p 5050:5050 -p 3000:3000 -p 8080:8080 -p 50051 --restart unless-stopped --network pixelaw oostvoort/pixelaw-core:v0.0.6
+````
+
+##### Manually
+This will take the most time. This entails cloning the PixeLAW core repos and running each individual component
+manually. Refer to the [GitHub repository](https://github.com/pixelaw/core) for how to run it.
+
+---
+Whichever way you've chosen to start up PixeLAW core, it will take a while for all the core contracts to get deployed
+and start running. Wait until http://localhost:3000/manifests/core stops returning NOT FOUND. After which you can start
+deploying your app onto your local PixeLAW via:
+
+#### Building your contracts
 ````console
 sozo build
 ````
 
-##### Deploying your contracts
+#### Deploying your contracts
 This will deploy your app to the local PixeLAW using sozo migrate.
 ````console
 sozo migrate --name pixelaw
 ````
 
-##### Initializing your contracts
+#### Initializing your contracts
 This will grant writer permission to your app for any custom models made.
 ````console
 scarb run initialize
 ````
 
-##### Uploading your manifest
+#### Uploading your manifest
 ````console
 scarb run upload_manifest
 ````
