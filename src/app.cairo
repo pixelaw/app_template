@@ -3,7 +3,6 @@ use pixelaw::core::models::pixel::{Pixel, PixelUpdate};
 use pixelaw::core::utils::{get_core_actions, Direction, Position, DefaultParameters};
 use starknet::{get_caller_address, get_contract_address, get_execution_info, ContractAddress};
 
-
 #[starknet::interface]
 trait IMyAppActions<TContractState> {
     fn init(self: @TContractState);
@@ -11,12 +10,17 @@ trait IMyAppActions<TContractState> {
     fn fade(self: @TContractState, default_params: DefaultParameters);
 }
 
+/// APP_KEY must be unique across the entire platform
 const APP_KEY: felt252 = 'myapp';
+
+/// Core only supports unicode icons for now
 const APP_ICON: felt252 = 'U+263A';
-/// BASE means using the server's default manifest.json handler
+
+/// prefixing with BASE means using the server's default manifest.json handler
 const APP_MANIFEST: felt252 = 'BASE/manifests/myapp';
 
 #[dojo::contract]
+/// contracts must be named as such (APP_KEY + underscore + "actions")
 mod myapp_actions {
     use starknet::{
         get_tx_info, get_caller_address, get_contract_address, get_execution_info, ContractAddress
