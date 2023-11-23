@@ -11,7 +11,7 @@ get it installed.
 ### Via Sozo
 Run sozo init. This will initialize the project by cloning the repo.
 ````console
-sozo init <replace-with-project-file-path> pixelaw/app-template
+sozo init <replace-with-project-file-path> pixelaw/app_template
 ````
 
 ### Via GitHub
