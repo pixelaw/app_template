@@ -24,10 +24,15 @@ echo "--------------------------------------------------------------------------
 # enable system -> component authorizations
 COMPONENTS=($(cat ./target/dev/manifest.json | jq -r '.models[] | .name'))
 
+# if #COMPONENTS is 0, then there are no models in the manifest. This might be error, 
 echo "Write permissions for ACTIONS"
-for component in ${COMPONENTS[@]}; do
-    sozo auth writer $component $ACTIONS_ADDRESS --world $WORLD_ADDRESS --rpc-url $RPC_URL
-done
+if [ ${#COMPONENTS[@]} -eq 0 ]; then
+    echo "Warning: No models found in manifest.json. Are you sure you don't have new any components?"
+else
+    for component in ${COMPONENTS[@]}; do
+        sozo auth writer $component $ACTIONS_ADDRESS --world $WORLD_ADDRESS --rpc-url $RPC_URL
+    done
+fi
 echo "Write permissions for ACTIONS: Done"
 
 echo "Initialize ACTIONS: Done"
