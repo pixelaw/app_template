@@ -50,6 +50,9 @@ mod tests {
         world.grant_writer('CoreActionsAddress', core_actions_address);
         world.grant_writer('Permissions', core_actions_address);
 
+        // PLEASE ADD YOUR APP PERMISSIONS HERE
+        
+        
         (world, core_actions, myapp_actions)
     }
 
