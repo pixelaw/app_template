@@ -118,9 +118,9 @@ mod myapp_actions {
 
             // Check if 5 seconds have passed or if the sender is the owner
             // TODO error message confusing, have to split this
+            assert(pixel.owner.is_zero() || (pixel.owner) == player, 'Pixel is owned by someone else');
             assert(
-                pixel.owner.is_zero() || (pixel.owner) == player || starknet::get_block_timestamp()
-                    - pixel.timestamp < COOLDOWN_SECS,
+                starknet::get_block_timestamp() - pixel.timestamp < COOLDOWN_SECS,
                 'Cooldown not over'
             );
 
