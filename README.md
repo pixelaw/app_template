@@ -98,6 +98,8 @@ scarb run upload_manifest
 Deploying to demo is almost the same as local development. The only difference is needing
 the RPC_URL of the Demo environment as well as the DEMO_URL (NOTE: this must end in a slash i.e. '/')
 of the Demo App to upload your manifest to. Both URLs can be provided by us. Please reach out through discord.
+Currently, sozo checks first if an environment variable was set in Scarb.toml for rpc-url. So, comment
+that out before beginning with the following steps.
 
 #### Build your contracts
 ````console
@@ -120,9 +122,3 @@ scarb run initialize <replace-this-with-provided-rpc-url>
 ````console
 scarb run upload_manifest <replace-this-with-provided-demo-url>
 ````
-
-# Current issues
-The following is a current unresolved issue in Dojo.
-- `test myapp::tests::tests::test_myapp_actions ... fail (gas usage est.: 1044740)
-  failures:
-  myapp::tests::tests::test_myapp_actions - panicked with [6445855526543742234424738320591137923774065490617582916 ('CLASS_HASH_NOT_DECLARED'), 23583600924385842957889778338389964899652 ('ENTRYPOINT_FAILED'), 23583600924385842957889778338389964899652 ('ENTRYPOINT_FAILED'), ]`
