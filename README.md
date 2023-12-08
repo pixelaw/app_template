@@ -122,3 +122,13 @@ scarb run initialize <replace-this-with-provided-rpc-url>
 ````console
 scarb run upload_manifest <replace-this-with-provided-demo-url>
 ````
+
+
+### FAQs
+#### error when deploying to rpc-url
+
+Please check the `[[tool.dojo.env]]` in your `Sarb.toml`. You have to modify it correctly.
+
+Also, please verify `account_address` and `private_key`.
+
+For dojo problems, please check the version is correct.
