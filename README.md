@@ -3,16 +3,14 @@ This is a heavily WIP attempt to allow creation of PixeLAW apps without managing
 
 # Prerequisites
 ## Dojo
-PixeLAW is built on top of Dojo. Refer to this [page](https://book.dojoengine.org/getting-started/quick-start.html) to
-get it installed.
+## Dojo
+PixeLAW is built on top of [Dojo](https://book.dojoengine.org/getting-started/quick-start.html). Install with:
+````console
+curl -L https://install.dojoengine.org | bash
+````
 
 # Getting started
 ## Clone this repository
-### Via Sozo
-Run sozo init. This will initialize the project by cloning the repo.
-````console
-sozo init <replace-with-project-file-path> pixelaw/app_template
-````
 
 ### Via GitHub
 Use this template to create a new repository or clone this repository locally.
