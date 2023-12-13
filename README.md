@@ -8,12 +8,6 @@ get it installed.
 
 # Getting started
 ## Clone this repository
-### Via Sozo
-Run sozo init. This will initialize the project by cloning the repo.
-````console
-sozo init <replace-with-project-file-path> pixelaw/app_template
-````
-
 ### Via GitHub
 Use this template to create a new repository or clone this repository locally.
 
