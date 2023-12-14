@@ -46,22 +46,6 @@ mod myapp_actions {
         }
     }
 
-    // ARGB
-    // 0xFF FF FF FF
-    // empty: 0x 00 00 00 00
-    // normal color: 0x FF FF FF FF
-    fn encode_color(r: u8, g: u8, b: u8) -> u32 {
-        (r.into() * 0x10000) + (g.into() * 0x100) + b.into()
-    }
-
-    fn decode_color(color: u32) -> (u8, u8, u8) {
-        let r = (color / 0x10000);
-        let g = (color / 0x100) & 0xff;
-        let b = color & 0xff;
-
-        (r.try_into().unwrap(), g.try_into().unwrap(), b.try_into().unwrap())
-    }
-
     // impl: implement functions specified in trait
     #[external(v0)]
     impl ActionsImpl of IMyAppActions<ContractState> {
