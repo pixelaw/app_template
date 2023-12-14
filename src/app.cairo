@@ -38,14 +38,6 @@ mod myapp_actions {
 
     use debug::PrintTrait;
 
-    fn subu8(nr: u8, sub: u8) -> u8 {
-        if nr >= sub {
-            return nr - sub;
-        } else {
-            return 0;
-        }
-    }
-
     // impl: implement functions specified in trait
     #[external(v0)]
     impl ActionsImpl of IMyAppActions<ContractState> {
