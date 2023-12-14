@@ -1,6 +1,6 @@
 services:
   pixelaw-core:
-    image: oostvoort/pixelaw-core:v0.0.19
+    image: oostvoort/pixelaw-core:v0.0.23
     container_name: pixelaw-core
     ports:
       - "5050:5050"
@@ -10,9 +10,6 @@ services:
     restart: unless-stopped
     networks:
       - pixelaw
-    environment:
-      - SEED=17885659508068513399
-      - TOTAL_ACCOUNTS=4
 
 networks:
   pixelaw:

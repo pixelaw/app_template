@@ -7,7 +7,7 @@ version = "0.0.1"
 sierra-replace-ids = true
 
 [dependencies]
-pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.0.19" }
+pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.0.23" }
 
 [[target.dojo]]
 build-external-contracts = [
@@ -32,5 +32,5 @@ upload_manifest_zsh = "zsh ./scripts/upload_manifest.sh"
 [tool.dojo.env]
 rpc_url = "http://localhost:5050/"
 
-account_address = "0x1275bf6bbde224b361455d990c089bfb05a5711aa90ec7ccb3d4e0ee9265b4e"
-private_key = "0x23ca81e30674f67a3cdbd8aec702aa2715c28f5ede99b360c4061f65e731fce"
+account_address = "0x517ececd29116499f4a1b64b094da79ba08dfd54a3edaa316134c41f8160973"
+private_key = "0x1800000000300000180000000000030000000000003006001800006600"

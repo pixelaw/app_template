@@ -47,7 +47,7 @@ docker network create --driver bridge pixelaw
 ````
 And this will run the actual container in http://localhost:3000:
 ````console
-docker run -d --name pixelaw-core -p 5050:5050 -p 3000:3000 -p 8080:8080 -p 50051 --restart unless-stopped --network pixelaw oostvoort/pixelaw-core:v0.0.6
+docker run -d --name pixelaw-core -p 5050:5050 -p 3000:3000 -p 8080:8080 -p 50051 --restart unless-stopped --network pixelaw oostvoort/pixelaw-core:v0.0.23
 ````
 
 ##### Manually
