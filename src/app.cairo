@@ -46,12 +46,10 @@ mod myapp_actions {
         }
     }
 
-
     // ARGB
     // 0xFF FF FF FF
     // empty: 0x 00 00 00 00
     // normal color: 0x FF FF FF FF
-
     fn encode_color(r: u8, g: u8, b: u8) -> u32 {
         (r.into() * 0x10000) + (g.into() * 0x100) + b.into()
     }
@@ -74,8 +72,7 @@ mod myapp_actions {
 
             core_actions.update_app(APP_KEY, APP_ICON, APP_MANIFEST);
 
-            // TODO: replace this with proper granting of permission
-
+            //Grant permission to the snake App
             core_actions
                 .update_permission(
                     'snake',
@@ -89,7 +86,6 @@ mod myapp_actions {
                     }
                 );
         }
-
 
         /// Put color on a certain position
         ///
