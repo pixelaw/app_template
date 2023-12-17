@@ -6,6 +6,8 @@ This is a heavily WIP attempt to allow creation of PixeLAW apps without managing
 PixeLAW is built on top of Dojo. Refer to this [page](https://book.dojoengine.org/getting-started/quick-start.html) to
 get it installed.
 
+> :warning: 2023-12-17 Downgrade to Dojo 0.3.15 for now with `dojoup -v 0.3.15` 
+
 # Getting started
 ## Clone this repository
 ### Via GitHub
