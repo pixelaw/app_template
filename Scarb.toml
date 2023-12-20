@@ -7,7 +7,7 @@ version = "0.0.1"
 sierra-replace-ids = true
 
 [dependencies]
-pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.0.45" }
+pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.0.59" }
 
 [[target.dojo]]
 build-external-contracts = []
