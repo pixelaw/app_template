@@ -1,6 +1,6 @@
 services:
   pixelaw-core:
-    image: ghcr.io/pixelaw/core:latest
+    image: ghcr.io/pixelaw/core:0.0.59
     container_name: pixelaw-core
     ports:
       - "5050:5050"
