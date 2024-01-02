@@ -90,10 +90,10 @@ scarb run upload_manifest
 
 ### Deploying to Demo
 Deploying to demo is almost the same as local development. The only difference is needing
-the RPC_URL of the Demo environment as well as the DEMO_URL (NOTE: this must end in a slash i.e. '/')
-of the Demo App to upload your manifest to. Both URLs can be provided by us. Please reach out through discord.
-Currently, sozo checks first if an environment variable was set in Scarb.toml for rpc-url. So, comment
-that out before beginning with the following steps.
+the RPC_URL of the Demo environment, the DEMO_URL (NOTE: this must end in a slash i.e. '/')
+of the Demo App to upload your manifest to, and the world name. Both URLs and world name can be provided by us. 
+Please reach out through discord. Currently, sozo checks first if an environment variable was set in Scarb.toml for 
+rpc-url. So, comment that out before beginning with the following steps.
 
 #### Build your contracts
 ````console
@@ -103,7 +103,7 @@ sozo build
 #### Deploy your contracts
 This will deploy your app to the local PixeLAW using sozo migrate.
 ````console
-sozo migrate --name pixelaw --rpc-url <replace-this-with-provided-rpc-url>
+sozo migrate --name <replace-this-with-provided-world-name> --rpc-url <replace-this-with-provided-rpc-url>
 ````
 
 #### Initializing your contracts
