@@ -1,5 +1,5 @@
 # PixeLAW App template
-This is a heavily WIP attempt to allow creation of PixeLAW apps without managing the main "game" repo.
+For additional step-by-step explanations on how to build and deploy your own PixeLAW app follow along [here](https://pixelaw.github.io/book/getting-started/quick-start.html)!
 
 # Prerequisites
 ## Dojo
