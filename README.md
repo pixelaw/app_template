@@ -3,7 +3,7 @@ For additional step-by-step explanations on how to build and deploy your own Pix
 
 # Prerequisites
 ## Dojo
-PixeLAW is built on top of Dojo. Refer to this [page]([https://book.dojoengine.org/getting-started/quick-start.html](https://book.dojoengine.org/getting-started/quick-start)) to get it installed.
+PixeLAW is built on top of Dojo. Refer to this [page](https://book.dojoengine.org/getting-started/quick-start) to get it installed.
 
 # Getting started
 ## Clone this repository
