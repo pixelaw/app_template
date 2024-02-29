@@ -39,7 +39,7 @@ mod myapp_actions {
     use debug::PrintTrait;
 
     // impl: implement functions specified in trait
-    #[external(v0)]
+    #[abi(embed_v0)]
     impl ActionsImpl of IMyAppActions<ContractState> {
         /// Initialize the MyApp App (TODO I think, do we need this??)
         fn init(self: @ContractState) {
@@ -47,6 +47,7 @@ mod myapp_actions {
             let core_actions = pixelaw::core::utils::get_core_actions(world);
 
             core_actions.update_app(APP_KEY, APP_ICON, APP_MANIFEST);
+
 
             //Grant permission to the snake App
             core_actions
@@ -58,7 +59,7 @@ mod myapp_actions {
                         owner: false,
                         text: true,
                         timestamp: false,
-                        action: false
+                        action: true
                     }
                 );
         }
