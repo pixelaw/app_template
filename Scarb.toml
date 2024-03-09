@@ -1,6 +1,6 @@
 [package]
 cairo-version = "2.4.0"
-name = "myapp"
+name = "pixelaw"
 version = "0.0.1"
 
 [cairo]
