@@ -11,6 +11,10 @@ deploy_new: reset deploy
 	scarb --profile $(PROFILE) run upload_manifest;
 	@echo "PixeLAW should be back at http://localhost:3000 again."
 
+deploy_local:
+	docker run -it --rm -v $(shell pwd):/mounted ghcr.io/pixelaw/core:0.3.6 /bin/sh -c "/pixelaw/tools/local_deploy.sh"
+
+
 deploy: build
 	sozo --profile $(PROFILE) migrate;
 
@@ -25,7 +29,7 @@ shell:
 	docker compose exec pixelaw-core bash;
 
 log_katana:
-	docker compose exec pixelaw-core tail -f /keiko/log/katana.log.json
+	docker compose exec pixelaw-core /bin/bash klog
 
 log_torii:
 	docker compose exec pixelaw-core tail -f /keiko/log/torii.log

@@ -1,26 +1,28 @@
 services:
   pixelaw-core:
-    image: ghcr.io/pixelaw/core:0.1.28
+    image: ghcr.io/pixelaw/core:0.3.6
     platform: linux/x86_64
     container_name: pixelaw-core
     environment:
       - DISABLE_FEE=true
-      - RUST_LOG=debug,hyper=off
-      - WORLD_ADDRESS=0x608cc3b3f4cf88e180bd3222dbf4af8afc1f0dbe93b2c30cd58f86ea6ccdbbf
+#      - RUST_LOG=debug,hyper=off
+      - SERVER_PORT=3000
+      - WORLD_ADDRESS=0x60916a73fe631fcba3b2a930e21c6f7bb2533ea398c7bfa75c72f71a8709fc2
     ports:
       - "127.0.0.1:5050:5050"
       - "127.0.0.1:3000:3000"
       - "127.0.0.1:8080:8080"
       - "127.0.0.1:9090:9090"
-    restart: unless-stopped
+    restart: no
     networks:
       - pixelaw
     volumes:
-      - storage:/keiko/storage
-      - log:/keiko/log
+      - storage:/pixelaw/storage
+      - .:/mounted
+
+
 networks:
   pixelaw:
     driver: bridge
 volumes:
   storage:
-  log:
