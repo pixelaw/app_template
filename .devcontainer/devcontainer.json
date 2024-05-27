@@ -1,12 +1,12 @@
 {
   "name": "My Project",
-  "image": "ghcr.io/pixelaw/core:0.3.13",
+  "image": "ghcr.io/pixelaw/core:0.3.14",
   "forwardPorts": [5050,8080,9090,3000],
   "containerEnv": {
     "WORLD_ADDRESS": "0x60916a73fe631fcba3b2a930e21c6f7bb2533ea398c7bfa75c72f71a8709fc2",
     "SERVER_PORT": "3000"
   },
-    "postStartCommand": ["/pixelaw/startup.sh"],
+    "postStartCommand": ["/pixelaw/scripts/startup.sh"],
   // Configure tool-specific properties.
   "customizations": {
     // Configure properties specific to VS Code.
