@@ -1,6 +1,6 @@
 {
   "name": "My Project",
-  "image": "ghcr.io/pixelaw/core:0.3.15",
+  "image": "ghcr.io/pixelaw/core:0.3.16",
   "forwardPorts": [5050,8080,9090,3000],
   "containerEnv": {
     "WORLD_ADDRESS": "0x60916a73fe631fcba3b2a930e21c6f7bb2533ea398c7bfa75c72f71a8709fc2",
