@@ -1,13 +1,13 @@
 [package]
 cairo-version = "2.6.3"
-name = "myapp"
+name = "pixelaw"
 version = "0.0.0"
 
 [cairo]
 sierra-replace-ids = true
 
 [dependencies]
-pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.3.8" }
+pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.3.17" }
 
 [[target.dojo]]
 build-external-contracts = [
