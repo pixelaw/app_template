@@ -12,7 +12,7 @@ deploy_new: reset deploy
 	@echo "PixeLAW should be back at http://localhost:3000 again."
 
 deploy_local:
-	docker run -it --rm -v $(shell pwd):/mounted ghcr.io/pixelaw/core:0.3.6 /bin/sh -c "/pixelaw/tools/local_deploy.sh"
+	/pixelaw/tools/local_deploy.sh
 
 
 deploy: build
