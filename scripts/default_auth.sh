@@ -4,7 +4,8 @@ pushd $(dirname "$0")/..
 
 
 export APP_NAME=$(grep "^name" Scarb.toml | awk -F' = ' '{print $2}' | tr -d '"')
-export ACTIONS_ADDRESS=$(cat ./target/$SCARB_PROFILE/manifest.json | jq -r '.contracts | first | .address')
+# export ACTIONS_ADDRESS=$(cat ./target/$SCARB_PROFILE/manifest.json | jq -r '.contracts | first | .address')
+export ACTIONS_ADDRESS=$(cat ./manifests/dev/manifest.json | jq -r '.contracts | first | .address')
 
 echo "---------------------------------------------------------------------------"
 echo app : $APP_NAME
@@ -13,7 +14,8 @@ echo actions : $ACTIONS_ADDRESS
 echo "---------------------------------------------------------------------------"
 
 # enable system -> component authorizations
-COMPONENTS=($(jq -r --arg APP_NAME "$APP_NAME" '.models[] | select(.name | contains($APP_NAME)) | .name' ./target/dev/manifest.json))
+# COMPONENTS=($(jq -r --arg APP_NAME "$APP_NAME" '.models[] | select(.name | contains($APP_NAME)) | .name' ./target/dev/manifest.json))
+COMPONENTS=($(jq -r --arg APP_NAME "$APP_NAME" '.models[] | select(.name | contains($APP_NAME)) | .name' ./manifests/dev/manifest.json))
 
 for index in "${!COMPONENTS[@]}"; do
     IFS='::' read -ra NAMES <<< "${COMPONENTS[index]}"
@@ -29,14 +31,18 @@ if [ ${#COMPONENTS[@]} -eq 0 ]; then
 else
     for component in ${COMPONENTS[@]}; do
         echo "For $component"
-        sozo --profile $SCARB_PROFILE auth grant writer $component,$ACTIONS_ADDRESS
+        # sozo --profile $SCARB_PROFILE auth grant writer $component,$ACTIONS_ADDRESS
+        sozo --profile dev auth grant writer $component,$ACTIONS_ADDRESS
     done
 fi
 echo "Write permissions for ACTIONS: Done"
 
-echo "Initialize ACTIONS: (sozo --profile $SCARB_PROFILE execute $ACTIONS_ADDRESS init)"
+# echo "Initialize ACTIONS: (sozo --profile $SCARB_PROFILE execute $ACTIONS_ADDRESS init)"
+echo "Initialize ACTIONS: (sozo --profile dev execute $ACTIONS_ADDRESS init)"
+
 sleep 0.1
-sozo --profile $SCARB_PROFILE execute $ACTIONS_ADDRESS init
+# sozo --profile $SCARB_PROFILE execute $ACTIONS_ADDRESS init
+sozo --profile dev execute $ACTIONS_ADDRESS init
 echo "Initialize ACTIONS: Done"
 
 
