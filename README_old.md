@@ -1,15 +1,13 @@
 # PixeLAW App template
-## Documents
-For additional step-by-step explanations on how to build and deploy your own PixeLAW app follow along [PixeLAW book](https://pixelaw.github.io/book/getting-started/quick-start.html)!
+For additional step-by-step explanations on how to build and deploy your own PixeLAW app follow along [here](https://pixelaw.github.io/book/getting-started/quick-start.html)!
 
-
-## Prerequisites
-### Dojo
+# Prerequisites
+## Dojo
 PixeLAW is built on top of Dojo. Refer to this [page](https://book.dojoengine.org/getting-started/quick-start) to get it installed.
 
-## Getting started
-### Clone this repository
-#### Via GitHub
+# Getting started
+## Clone this repository
+### Via GitHub
 Use this template to create a new repository or clone this repository locally.
 
 ## Run this code
@@ -19,15 +17,44 @@ sozo test
 ````
 
 ### Local Development
+
 #### Run [Pixelaw/core](https://github.com/pixelaw/core)
-We are using [devcontainer](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) environments. Please open this code with vscode and launch the container with devcontainer.
+There are multiple ways to have a local copy of PixeLAW core for development:
 
-This is the easiest way to get PixeLAW core up and running in http://localhost:3000. We recommend you to use incognito mode to browse.
+##### Using Docker Compose (Recommended)
+This is the easiest way to get PixeLAW core up and running in http://localhost:3000. There is a docker-compose file in this repository specifically for running a local image
+of PixeLAW core. 
 
+###### Prerequisites
+1. [Docker](https://docs.docker.com/engine/install/)
+2. [Docker Compose plugin](https://docs.docker.com/compose/install/)
+
+Running the following command will run core in a container.
+````console
+docker compose up -d
+````
+
+##### Using Docker
+Another way to go about it is by using the Docker engine by itself. 
+
+######
+1. [Docker](https://docs.docker.com/engine/install/)
+
+The following script will create the docker network for the container to run in:
+````console
+docker network create --driver bridge pixelaw
+````
+And this will run the actual container in http://localhost:3000:
+````console
+docker run -d --name pixelaw-core -p 5050:5050 -p 3000:3000 -p 8080:8080 -p 50051 --restart unless-stopped --network pixelaw oostvoort/pixelaw-core:v0.0.33
+````
+
+##### Manually
+This will take the most time. This entails cloning the PixeLAW core repos and running each individual component
+manually. Refer to the [GitHub repository](https://github.com/pixelaw/core) for how to run it.
 
 ---
-### Check the status
-If you succesfully start up PixeLAW core, it will take a while for all the core contracts to get deployed
+Whichever way you've chosen to start up PixeLAW core, it will take a while for all the core contracts to get deployed
 and start running. Wait until http://localhost:3000/manifests/core stops returning NOT FOUND. To check if you can
 start deploying your app, use the following script (this will print out "Ready for app deployment" when the core
 contracts have finished initialization):
@@ -38,9 +65,7 @@ scarb run ready_for_deployment
 
 After which you can start deploying your app onto your local PixeLAW via:
 
----
-### Build and Deploy your contracts locally
-#### Building
+#### Building your contracts
 ````console
 sozo build
 ````
@@ -48,7 +73,7 @@ sozo build
 #### Deploying your contracts
 This will deploy your app to the local PixeLAW using sozo migrate.
 ````console
-sozo migrate apply --name pixelaw
+sozo migrate --name pixelaw
 ````
 
 #### Initializing your contracts
@@ -62,7 +87,6 @@ scarb run initialize
 scarb run upload_manifest
 ````
 
----
 ### Deploying to Demo
 Deploying to demo is almost the same as local development. The only difference is needing
 the RPC_URL of the Demo environment, the DEMO_URL (NOTE: this must end in a slash i.e. '/')
@@ -78,7 +102,7 @@ sozo build
 #### Deploy your contracts
 This will deploy your app to the local PixeLAW using sozo migrate.
 ````console
-sozo migrate apply --name <replace-this-with-provided-world-name> --rpc-url <replace-this-with-provided-rpc-url>
+sozo migrate --name <replace-this-with-provided-world-name> --rpc-url <replace-this-with-provided-rpc-url>
 ````
 
 #### Initializing your contracts
