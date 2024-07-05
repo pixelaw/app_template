@@ -7,7 +7,7 @@ version = "0.0.0"
 sierra-replace-ids = true
 
 [dependencies]
-pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.3.18" }
+pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.3.27" }
 
 [[target.dojo]]
 build-external-contracts = [
@@ -50,12 +50,12 @@ upload_manifest_zsh = "zsh ./scripts/upload_manifest.sh"
 rpc_url = "http://127.0.0.1:5050/"
 account_address = "0x003c4dd268780ef738920c801edc3a75b6337bc17558c74795b530c0ff502486"
 private_key = "0x2bbf4f9fd0bbb2e60b0316c1fe0b76cf7a4d0198bd493ced9b8df2a3a24d68a"
-world_address= "0x60916a73fe631fcba3b2a930e21c6f7bb2533ea398c7bfa75c72f71a8709fc2"
+world_address= "0x00a712727a27defbf77122fae30c91e90ec62bba8f09a2a396eddc29b768386b"
 
-# demo.pixelaw.xyz
-[profile.demo.tool.dojo.env]
-rpc_url = "https://katana.demo.pixelaw.xyz/"
-account_address = "0x003c4dd268780ef738920c801edc3a75b6337bc17558c74795b530c0ff502486"
-private_key = "0x2bbf4f9fd0bbb2e60b0316c1fe0b76cf7a4d0198bd493ced9b8df2a3a24d68a"
-world_address = "0x608cc3b3f4cf88e180bd3222dbf4af8afc1f0dbe93b2c30cd58f86ea6ccdbbf"
-manifest_url="https://demo.pixelaw.xyz/manifests"
+## demo.pixelaw.xyz
+#[profile.demo.tool.dojo.env]
+#rpc_url = "https://katana.demo.pixelaw.xyz/"
+#account_address = "0x003c4dd268780ef738920c801edc3a75b6337bc17558c74795b530c0ff502486"
+#private_key = "0x2bbf4f9fd0bbb2e60b0316c1fe0b76cf7a4d0198bd493ced9b8df2a3a24d68a"
+#world_address = "0x00a712727a27defbf77122fae30c91e90ec62bba8f09a2a396eddc29b768386b"
+#manifest_url="https://demo.pixelaw.xyz/manifests"

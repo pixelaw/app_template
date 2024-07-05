@@ -1,13 +1,13 @@
 services:
   pixelaw-core:
-    image: ghcr.io/pixelaw/core:0.3.19
+    image: ghcr.io/pixelaw/core:0.3.27
     platform: linux/x86_64
     container_name: pixelaw-core
     environment:
       - DISABLE_FEE=true
 #      - RUST_LOG=debug,hyper=off
       - SERVER_PORT=3000
-      - WORLD_ADDRESS=0x60916a73fe631fcba3b2a930e21c6f7bb2533ea398c7bfa75c72f71a8709fc2
+      - WORLD_ADDRESS=0x00a712727a27defbf77122fae30c91e90ec62bba8f09a2a396eddc29b768386b
     ports:
       - "127.0.0.1:5050:5050"
       - "127.0.0.1:3000:3000"
