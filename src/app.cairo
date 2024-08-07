@@ -3,10 +3,10 @@ use pixelaw::core::models::pixel::{Pixel, PixelUpdate};
 use pixelaw::core::utils::{get_core_actions, Direction, Position, DefaultParameters};
 use starknet::{get_caller_address, get_contract_address, get_execution_info, ContractAddress};
 
-#[starknet::interface]
+#[dojo::interface]
 trait IMyAppActions<TContractState> {
-    fn init(self: @TContractState);
-    fn interact(self: @TContractState, default_params: DefaultParameters);
+    fn init(ref world: IWorldDispatcher);
+    fn interact(ref world: IWorldDispatcher, default_params: DefaultParameters);
 }
 
 /// APP_KEY must be unique across the entire platform
@@ -41,9 +41,9 @@ mod myapp_actions {
     // impl: implement functions specified in trait
     #[abi(embed_v0)]
     impl ActionsImpl of IMyAppActions<ContractState> {
+
         /// Initialize the MyApp App (TODO I think, do we need this??)
-        fn init(self: @ContractState) {
-            let world = self.world_dispatcher.read();
+        fn init(ref world: IWorldDispatcher) {
             let core_actions = pixelaw::core::utils::get_core_actions(world);
 
             core_actions.update_app(APP_KEY, APP_ICON, APP_MANIFEST);
@@ -70,11 +70,10 @@ mod myapp_actions {
         ///
         /// * `position` - Position of the pixel.
         /// * `new_color` - Color to set the pixel to.
-        fn interact(self: @ContractState, default_params: DefaultParameters) {
+        fn interact(ref world: IWorldDispatcher, default_params: DefaultParameters) {
             'put_color'.print();
 
             // Load important variables
-            let world = self.world_dispatcher.read();
             let core_actions = get_core_actions(world);
             let position = default_params.position;
             let player = core_actions.get_player_address(default_params.for_player);
