@@ -1,103 +1,129 @@
-# PixeLAW App template
-## Documents
-For additional step-by-step explanations on how to build and deploy your own PixeLAW app follow along [PixeLAW book](https://pixelaw.github.io/book/getting-started/quick-start.html)!
+# PixeLAW App Template
 
+Contracts written in Cairo using Dojo to showcase a Pixel World with app interoperability. Its interoperability is made possible with core actions. Apps are any other contracts that are deployed to the Pixel World.
 
-## Prerequisites
-### Dojo
-PixeLAW is built on top of Dojo. Refer to this [page](https://book.dojoengine.org/getting-started/quick-start) to get it installed.
+## Development
 
-## Getting started
-### Clone this repository
-#### Via GitHub
-Use this template to create a new repository or clone this repository locally.
+### Prerequisites
 
-## Run this code
-### Run the tests made for this app
-````console
-sozo test
-````
+- [asdf](https://asdf-vm.com/)
+- [scarb](https://docs.swmansion.com/scarb/)
+- [dojo](https://github.com/dojoengine/dojo)
 
-### Local Development
-#### Run [Pixelaw/core](https://github.com/pixelaw/core)
-We are using [devcontainer](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) environments. Please open this code with vscode and launch the container with devcontainer.
+### Install asdf
 
-This is the easiest way to get PixeLAW core up and running in http://localhost:3000. We recommend you to use incognito mode to browse.
+Follow the asdf installation instructions.
 
+### Install dojo
 
----
-### Check the status
-If you succesfully start up PixeLAW core, it will take a while for all the core contracts to get deployed
-and start running. Wait until http://localhost:3000/manifests/core stops returning NOT FOUND. To check if you can
-start deploying your app, use the following script (this will print out "Ready for app deployment" when the core
-contracts have finished initialization):
+```
+asdf plugin add dojo https://github.com/dojoengine/asdf-dojo
+asdf install dojo 1.0.0-alpha.11
+```
 
-````console
-scarb run ready_for_deployment
-````
+### Install scarb
 
-After which you can start deploying your app onto your local PixeLAW via:
+```
+asdf plugin add scarb
+asdf install scarb 2.7.0-rc.4
+```
 
----
-### Build and Deploy your contracts locally
-#### Building
-````console
-sozo build
-````
+And after moving into contracts directory, the versions for these libs are set in the .tool-versions file.
 
-#### Deploying your contracts
-This will deploy your app to the local PixeLAW using sozo migrate.
-````console
-sozo migrate apply --name pixelaw
-````
+## Default Apps
 
-#### Initializing your contracts
-This will grant writer permission to your app for any custom models made.
-````console
-scarb run initialize
-````
+These are apps developed by PixeLAW
 
-#### Uploading your manifest
-````console
-scarb run upload_manifest
-````
+## Paint
 
----
-### Deploying to Demo
-Deploying to demo is almost the same as local development. The only difference is needing
-the RPC_URL of the Demo environment, the DEMO_URL (NOTE: this must end in a slash i.e. '/')
-of the Demo App to upload your manifest to, and the world name. Both URLs and world name can be provided by us. 
-Please reach out through discord. Currently, sozo checks first if an environment variable was set in Scarb.toml for 
-rpc-url. So, comment that out before beginning with the following steps.
+### Overview
 
-#### Build your contracts
-````console
-sozo build
-````
+The Paint App is a collection of functions that allow players to manipulate the color of a Pixel.
 
-#### Deploy your contracts
-This will deploy your app to the local PixeLAW using sozo migrate.
-````console
-sozo migrate apply --name <replace-this-with-provided-world-name> --rpc-url <replace-this-with-provided-rpc-url>
-````
+### Properties
 
-#### Initializing your contracts
-This will grant writer permission to your app for any custom models made.
-````console
-scarb run initialize <replace-this-with-provided-rpc-url>
-````
+None, Paint is just behavior.
 
-#### Uploading your manifest
-````console
-scarb run upload_manifest <replace-this-with-provided-demo-url>
-````
+### Behavior
 
+- public `put_color(color)`
+  - context: position
+- both `put_fading_color(color)`
+  - context: position
+- public `remove_color()`
+  - context: position
 
-### FAQs
-#### error when deploying to rpc-url
+## Snake
 
-Please check the `[[tool.dojo.env]]` in your `Sarb.toml`. You have to modify it correctly.
+### Overview
 
-Also, please verify `account_address` and `private_key`.
+It it basically the game "snake", but with Pixels not necessarily available to move on/over. It is a player-initialized instance that coordinates pixel's color and text being overriden and reverted (if allowed).
+If hitting an unowned Pixel, the snake will move, if Pixel is owned by player, Snake grows, and if Pixel is not owned but it's App allows Snake, it shrinks. In all other cases, Snake dies.
 
-For dojo problems, please check the version is correct.
+### Properties
+
+- position
+- color
+- text
+- direction
+
+### Behavior
+
+- public `spawn(color, text, direction)`
+  - context: position
+- public `turn(snake_id, direction)`
+  - context: player
+- private `move(snake_id)`
+
+## Rock Paper Scissors
+
+### Overview
+
+Each Pixel can contain an instance of the RPS App, where it holds a commitment (rock, paper or scissors) from player1. Any other player can now "join" and submit their move. Player1 can then reveal, the winner is decided then. Winner gains ownership of the losing RPS pixel. In case of a draw, the pixel is reset.
+The App is also tracking score for each Player.
+
+### Global Properties
+
+- player+wins
+
+### Game-based Properties
+
+- player1
+- player2
+
+### Behavior
+
+- create (position, player1, commit1)
+- join (position, player2, move2)
+- finish (position, move1, salt1)
+- reset (position)
+
+## CommitReveal inputs
+
+### Param of the action
+
+- (Hashed Commit)
+  - parametername of action has structure: "PREFIX_TYPE_NAME"
+  - PREFIX is "cr\_"
+  - TYPE for now is the name of an int, felt or Enum declared in the manifest
+  - NAME is a chosen name to refer to the param.
+- (Value+Salt reveal)
+  - parametername of action has structure: "PREFIX_NAME"
+  - PREFIX shall always be "rv\_"
+  - NAME is the same name user during sending the commit
+
+### Clientside functioning
+
+- If client finds a param starting with "cr\_"
+- It will prompt user for a param with TYPE
+  - example:
+    - The game RPS needs player1 to choose one option, but only send the hashedcommit
+    - Then, during a next stage of the game, the plaintext move and the salt will be requested
+    - The challenge is that the UI needsto be capable of doing this without knowing about the specific application. Reveal/Commit is a feature of the platform.
+    - Commit
+      - RpsMove is an enum with 3 fields, so ui presents user with 3 choices
+      - UI stores this clientside related to the pixel/app
+      - UI then hashes this with a salt, and also stores the salt with the choice
+      - UI then calls the functions with only the hash value
+    - Reveal
+      - there will be 2 params: "rv_NAME" (the actual param) and "rs_NAME" (the used salt)
