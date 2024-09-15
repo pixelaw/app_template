@@ -21,22 +21,21 @@ const APP_MANIFEST: felt252 = 'BASE/manifests/myapp';
 /// contracts must be named as such (APP_KEY + underscore + "actions")
 #[dojo::contract(namespace: "pixelaw", nomapping: true)]
 mod myapp_actions {
+    use debug::PrintTrait;
+    use pixelaw::core::actions::{
+        IActionsDispatcher as ICoreActionsDispatcher,
+        IActionsDispatcherTrait as ICoreActionsDispatcherTrait
+    };
+
+    use pixelaw::core::models::permissions::{Permission};
+    use pixelaw::core::models::pixel::{Pixel, PixelUpdate};
+    use pixelaw::core::utils::{get_core_actions, Direction, Position, DefaultParameters};
     use starknet::{
         get_tx_info, get_caller_address, get_contract_address, get_execution_info, ContractAddress
     };
 
     use super::IMyAppActions;
-    use pixelaw::core::models::pixel::{Pixel, PixelUpdate};
-
-    use pixelaw::core::models::permissions::{Permission};
-    use pixelaw::core::actions::{
-        IActionsDispatcher as ICoreActionsDispatcher,
-        IActionsDispatcherTrait as ICoreActionsDispatcherTrait
-    };
     use super::{APP_KEY, APP_ICON, APP_MANIFEST};
-    use pixelaw::core::utils::{get_core_actions, Direction, Position, DefaultParameters};
-
-    use debug::PrintTrait;
 
     // impl: implement functions specified in trait
     #[abi(embed_v0)]

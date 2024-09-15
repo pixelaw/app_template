@@ -12,3 +12,6 @@ pixelaw = { path = "/Users/asumayamada/Private/pixelaw/core/contracts" }
 
 [[target.dojo]]
 build-external-contracts = []
+
+[tool.fmt]
+sort-module-level-items = true

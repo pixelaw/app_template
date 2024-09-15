@@ -1,22 +1,22 @@
 #[cfg(test)]
 mod tests {
-    use starknet::class_hash::Felt252TryIntoClassHash;
     use debug::PrintTrait;
-
-    use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
-    use pixelaw::core::models::registry::{app, app_name, core_actions_address};
-
-    use pixelaw::core::models::pixel::{Pixel, PixelUpdate};
-    use pixelaw::core::models::pixel::{pixel};
-    use pixelaw::core::models::permissions::{permissions};
-    use pixelaw::core::utils::{
-        get_core_actions, encode_color, decode_color, Direction, Position, DefaultParameters
-    };
-    use pixelaw::core::actions::{actions, IActionsDispatcher, IActionsDispatcherTrait};
 
     use dojo::utils::test::{spawn_test_world};
 
+    use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
+
     use myapp::app::{myapp_actions, IMyAppActionsDispatcher, IMyAppActionsDispatcherTrait};
+    use pixelaw::core::actions::{actions, IActionsDispatcher, IActionsDispatcherTrait};
+    use pixelaw::core::models::permissions::{permissions};
+
+    use pixelaw::core::models::pixel::{Pixel, PixelUpdate};
+    use pixelaw::core::models::pixel::{pixel};
+    use pixelaw::core::models::registry::{app, app_name, core_actions_address};
+    use pixelaw::core::utils::{
+        get_core_actions, encode_color, decode_color, Direction, Position, DefaultParameters
+    };
+    use starknet::class_hash::Felt252TryIntoClassHash;
 
     use zeroable::Zeroable;
 
