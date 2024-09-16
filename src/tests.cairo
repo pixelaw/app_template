@@ -1,7 +1,6 @@
 #[cfg(test)]
 mod tests {
     use debug::PrintTrait;
-
     use dojo::utils::test::{spawn_test_world};
 
     use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
@@ -22,7 +21,6 @@ mod tests {
 
     // Helper function: deploys world and actions
     fn deploy_world() -> (IWorldDispatcher, IActionsDispatcher, IMyAppActionsDispatcher) {
-        // Deploy World and models
         let mut models = array![
             pixel::TEST_CLASS_HASH,
             app::TEST_CLASS_HASH,
@@ -43,11 +41,11 @@ mod tests {
         let myapp_actions = IMyAppActionsDispatcher { contract_address: myapp_actions_address };
 
         // Setup dojo auth
-        world.grant_writer('Pixel', core_actions_address);
-        world.grant_writer('App', core_actions_address);
-        world.grant_writer('AppName', core_actions_address);
-        world.grant_writer('CoreActionsAddress', core_actions_address);
-        world.grant_writer('Permissions', core_actions_address);
+        world.grant_writer(selector_from_tag!("pixelaw-Pixel"), core_actions_address);
+        world.grant_writer(selector_from_tag!("pixelaw-App"), core_actions_address);
+        world.grant_writer(selector_from_tag!("pixelaw-AppName"), core_actions_address);
+        world.grant_writer(selector_from_tag!("pixelaw-Permissions"), core_actions_address);
+        world.grant_writer(selector_from_tag!("pixelaw-CoreActionsAddress"), core_actions_address);
 
         // PLEASE ADD YOUR APP PERMISSIONS HERE
 
