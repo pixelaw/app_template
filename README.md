@@ -3,14 +3,14 @@
 <img alt="Dojo logo" align="right" width="100" src="https://avatars.githubusercontent.com/u/140254228?s=200&v=4">
 </picture>
 
-<a href="https://twitter.com/0xpixelaw">
+<a href="https://x.com/0xpixelaw">
 <img src="https://img.shields.io/twitter/follow/0xpixelaw?style=social"/>
 </a>
 <a href="https://github.com/pixelaw/core">
 <img src="https://img.shields.io/github/stars/pixelaw/core?style=social"/>
 </a>
 
-[![discord](https://img.shields.io/badge/join-pixelaw-green?logo=discord&logoColor=white)](https://discord.gg/PwDa2mKhR4)
+[![discord](https://img.shields.io/badge/join-PixeLAW-green?logo=discord&logoColor=white)](https://t.co/jKDjNbFdZ5)
 
 # PixeLAW App Template
 
@@ -69,7 +69,7 @@ torii --world 0x263ae44e5414519a5c5a135cccaf3d9d7ee196d37e8de47a178da91f3de9b34 
 
 ### How to deploy
 
-you can deploy your app to the our katana testnet by running the following commands:
+you can deploy your app to our katana testnet by running the following commands:
 
 ```bash
 # Deploy the pixelaw app
