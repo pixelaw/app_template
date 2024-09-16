@@ -4,7 +4,7 @@ use pixelaw::core::utils::{get_core_actions, Direction, Position, DefaultParamet
 use starknet::{get_caller_address, get_contract_address, get_execution_info, ContractAddress};
 
 #[dojo::interface]
-trait IMyAppActions<TContractState> {
+pub trait IMyAppActions<TContractState> {
     fn init(ref world: IWorldDispatcher);
     fn interact(ref world: IWorldDispatcher, default_params: DefaultParameters);
 }
@@ -20,7 +20,7 @@ const APP_MANIFEST: felt252 = 'BASE/manifests/myapp';
 
 /// contracts must be named as such (APP_KEY + underscore + "actions")
 #[dojo::contract(namespace: "pixelaw", nomapping: true)]
-mod myapp_actions {
+pub mod myapp_actions {
     use debug::PrintTrait;
     use pixelaw::core::actions::{
         IActionsDispatcher as ICoreActionsDispatcher,
@@ -45,20 +45,6 @@ mod myapp_actions {
             let core_actions = pixelaw::core::utils::get_core_actions(world);
 
             core_actions.update_app(APP_KEY, APP_ICON, APP_MANIFEST);
-
-            //Grant permission to the snake App
-            core_actions
-                .update_permission(
-                    'snake',
-                    Permission {
-                        app: false,
-                        color: true,
-                        owner: false,
-                        text: true,
-                        timestamp: false,
-                        action: true
-                    }
-                );
         }
 
         /// Put color on a certain position

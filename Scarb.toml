@@ -7,11 +7,35 @@ version = "0.0.0"
 sierra-replace-ids = true
 
 [dependencies]
-pixelaw = { path = "/Users/asumayamada/Private/pixelaw/core/contracts" }
-# pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.3.50" }
+pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.3.50" }
+# Added explicitly for https://github.com/dojoengine/dojo/issues/2430
+dojo = { git = "https://github.com/dojoengine/dojo", tag = "v1.0.0-alpha.11" }
 
 [[target.dojo]]
-build-external-contracts = []
+build-external-contracts = [
+    "pixelaw::core::models::pixel::pixel",
+    "pixelaw::core::models::pixel::Pixel",
+    "pixelaw::core::models::pixel::PixelUpdate",
+    "pixelaw::core::models::queue::queue_item",
+    "pixelaw::core::models::registry::app",
+    "pixelaw::core::models::registry::app_name",
+    "pixelaw::core::models::registry::app_user",
+    "pixelaw::core::models::registry::app_instruction",
+    "pixelaw::core::models::registry::instruction",
+    "pixelaw::core::models::registry::core_actions_address",
+    "pixelaw::core::models::permissions::permissions",
+    "pixelaw::core::utils::get_core_actions",
+    "pixelaw::core::utils::Direction",
+    "pixelaw::core::utils::Position",
+    "pixelaw::core::utils::DefaultParameters",
+    "pixelaw::core::actions::actions",
+    "pixelaw::core::actions::IActionsDispatcher",
+    "pixelaw::core::actions::IActionsDispatcherTrait",
+]
 
 [tool.fmt]
 sort-module-level-items = true
+
+
+[scripts]
+init_auth = "./scripts/init_auth.sh"
