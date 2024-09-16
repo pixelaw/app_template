@@ -4,7 +4,7 @@ use pixelaw::core::utils::{get_core_actions, Direction, Position, DefaultParamet
 use starknet::{get_caller_address, get_contract_address, get_execution_info, ContractAddress};
 
 #[dojo::interface]
-trait IMyAppActions<TContractState> {
+pub trait IMyAppActions<TContractState> {
     fn init(ref world: IWorldDispatcher);
     fn interact(ref world: IWorldDispatcher, default_params: DefaultParameters);
 }
@@ -18,50 +18,33 @@ const APP_ICON: felt252 = 'U+263A';
 /// prefixing with BASE means using the server's default manifest.json handler
 const APP_MANIFEST: felt252 = 'BASE/manifests/myapp';
 
-#[dojo::contract]
 /// contracts must be named as such (APP_KEY + underscore + "actions")
-mod myapp_actions {
+#[dojo::contract(namespace: "pixelaw", nomapping: true)]
+pub mod myapp_actions {
+    use debug::PrintTrait;
+    use pixelaw::core::actions::{
+        IActionsDispatcher as ICoreActionsDispatcher,
+        IActionsDispatcherTrait as ICoreActionsDispatcherTrait
+    };
+
+    use pixelaw::core::models::permissions::{Permission};
+    use pixelaw::core::models::pixel::{Pixel, PixelUpdate};
+    use pixelaw::core::utils::{get_core_actions, Direction, Position, DefaultParameters};
     use starknet::{
         get_tx_info, get_caller_address, get_contract_address, get_execution_info, ContractAddress
     };
 
     use super::IMyAppActions;
-    use pixelaw::core::models::pixel::{Pixel, PixelUpdate};
-
-    use pixelaw::core::models::permissions::{Permission};
-    use pixelaw::core::actions::{
-        IActionsDispatcher as ICoreActionsDispatcher,
-        IActionsDispatcherTrait as ICoreActionsDispatcherTrait
-    };
     use super::{APP_KEY, APP_ICON, APP_MANIFEST};
-    use pixelaw::core::utils::{get_core_actions, Direction, Position, DefaultParameters};
-
-    use debug::PrintTrait;
 
     // impl: implement functions specified in trait
     #[abi(embed_v0)]
     impl ActionsImpl of IMyAppActions<ContractState> {
-
         /// Initialize the MyApp App (TODO I think, do we need this??)
         fn init(ref world: IWorldDispatcher) {
             let core_actions = pixelaw::core::utils::get_core_actions(world);
 
             core_actions.update_app(APP_KEY, APP_ICON, APP_MANIFEST);
-
-
-            //Grant permission to the snake App
-            core_actions
-                .update_permission(
-                    'snake',
-                    Permission {
-                        app: false,
-                        color: true,
-                        owner: false,
-                        text: true,
-                        timestamp: false,
-                        action: true
-                    }
-                );
         }
 
         /// Put color on a certain position
@@ -71,8 +54,6 @@ mod myapp_actions {
         /// * `position` - Position of the pixel.
         /// * `new_color` - Color to set the pixel to.
         fn interact(ref world: IWorldDispatcher, default_params: DefaultParameters) {
-            'put_color'.print();
-
             // Load important variables
             let core_actions = get_core_actions(world);
             let position = default_params.position;
@@ -88,9 +69,9 @@ mod myapp_actions {
 
             // Check if 5 seconds have passed or if the sender is the owner
             assert(
-            pixel.owner.is_zero() || (pixel.owner) == player || starknet::get_block_timestamp()
-            - pixel.timestamp < COOLDOWN_SECS,
-            'Cooldown not over'
+                pixel.owner.is_zero() || (pixel.owner) == player || starknet::get_block_timestamp()
+                    - pixel.timestamp < COOLDOWN_SECS,
+                'Cooldown not over'
             );
 
             // We can now update color of the pixel
@@ -109,8 +90,6 @@ mod myapp_actions {
                         action: Option::None // Not using this feature for myapp
                     }
                 );
-
-            'put_color DONE'.print();
         }
     }
 }

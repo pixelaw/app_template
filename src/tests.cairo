@@ -1,37 +1,34 @@
 #[cfg(test)]
 mod tests {
-    use starknet::class_hash::Felt252TryIntoClassHash;
     use debug::PrintTrait;
+    use dojo::utils::test::{spawn_test_world};
 
     use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
-    use pixelaw::core::models::registry::{app, app_name, core_actions_address};
+
+    use myapp::app::{myapp_actions, IMyAppActionsDispatcher, IMyAppActionsDispatcherTrait};
+    use pixelaw::core::actions::{actions, IActionsDispatcher, IActionsDispatcherTrait};
+    use pixelaw::core::models::permissions::{permissions};
 
     use pixelaw::core::models::pixel::{Pixel, PixelUpdate};
     use pixelaw::core::models::pixel::{pixel};
-    use pixelaw::core::models::permissions::{permissions};
-    use pixelaw::core::utils::{get_core_actions, Direction, Position, DefaultParameters};
-    use pixelaw::core::actions::{actions, IActionsDispatcher, IActionsDispatcherTrait};
-
-    use dojo::test_utils::{spawn_test_world, deploy_contract};
-
-    use myapp::app::{
-        myapp_actions, IMyAppActionsDispatcher, IMyAppActionsDispatcherTrait
+    use pixelaw::core::models::registry::{app, app_name, core_actions_address};
+    use pixelaw::core::utils::{
+        get_core_actions, encode_color, decode_color, Direction, Position, DefaultParameters
     };
+    use starknet::class_hash::Felt252TryIntoClassHash;
 
     use zeroable::Zeroable;
 
     // Helper function: deploys world and actions
     fn deploy_world() -> (IWorldDispatcher, IActionsDispatcher, IMyAppActionsDispatcher) {
-        // Deploy World and models
-        let world = spawn_test_world(
-            array![
-                pixel::TEST_CLASS_HASH,
-                app::TEST_CLASS_HASH,
-                app_name::TEST_CLASS_HASH,
-                core_actions_address::TEST_CLASS_HASH,
-                permissions::TEST_CLASS_HASH,
-            ]
-        );
+        let mut models = array![
+            pixel::TEST_CLASS_HASH,
+            app::TEST_CLASS_HASH,
+            app_name::TEST_CLASS_HASH,
+            core_actions_address::TEST_CLASS_HASH,
+            permissions::TEST_CLASS_HASH,
+        ];
+        let world = spawn_test_world(["pixelaw"].span(), models.span());
 
         // Deploy Core actions
         let core_actions_address = world
@@ -44,15 +41,14 @@ mod tests {
         let myapp_actions = IMyAppActionsDispatcher { contract_address: myapp_actions_address };
 
         // Setup dojo auth
-        world.grant_writer('Pixel', core_actions_address);
-        world.grant_writer('App', core_actions_address);
-        world.grant_writer('AppName', core_actions_address);
-        world.grant_writer('CoreActionsAddress', core_actions_address);
-        world.grant_writer('Permissions', core_actions_address);
+        world.grant_writer(selector_from_tag!("pixelaw-Pixel"), core_actions_address);
+        world.grant_writer(selector_from_tag!("pixelaw-App"), core_actions_address);
+        world.grant_writer(selector_from_tag!("pixelaw-AppName"), core_actions_address);
+        world.grant_writer(selector_from_tag!("pixelaw-Permissions"), core_actions_address);
+        world.grant_writer(selector_from_tag!("pixelaw-CoreActionsAddress"), core_actions_address);
 
         // PLEASE ADD YOUR APP PERMISSIONS HERE
-        
-        
+
         (world, core_actions, myapp_actions)
     }
 
@@ -68,7 +64,7 @@ mod tests {
         let player1 = starknet::contract_address_const::<0x1337>();
         starknet::testing::set_account_contract_address(player1);
 
-        let color = encode_color(1, 1, 1);
+        let color = encode_color(1, 1, 1, 1);
 
         myapp_actions
             .interact(
@@ -84,17 +80,5 @@ mod tests {
         assert(pixel_1_1.color == color, 'should be the color');
 
         'Passed test'.print();
-    }
-
-    fn encode_color(r: u8, g: u8, b: u8) -> u32 {
-        (r.into() * 0x10000) + (g.into() * 0x100) + b.into()
-    }
-
-    fn decode_color(color: u32) -> (u8, u8, u8) {
-        let r = (color / 0x10000);
-        let g = (color / 0x100) & 0xff;
-        let b = color & 0xff;
-
-        (r.try_into().unwrap(), g.try_into().unwrap(), b.try_into().unwrap())
     }
 }
