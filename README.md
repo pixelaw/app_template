@@ -76,3 +76,30 @@ you can deploy your app to our katana testnet by running the following commands:
 sozo build -P release
 sozo migrate apply -P release
 ```
+
+
+## Troubleshooting
+
+If you want to use latest dojo version, you need to clone core by yourself and modify the path in `Scarb.toml` file.
+
+1. Clone core repo
+```bash
+git clone https://github.com/pixelaw/core
+```
+
+2. Modify the path in `Scarb.toml` file
+```Scarb.toml
+pixelaw = { path = "../pixelaw/core/contracts" }
+```
+
+3. Modify version in `Scarb.toml` file in core repo
+```Scarb.toml
+dojo = { git = "https://github.com/dojoengine/dojo", tag = "v1.0.0-alpha.11" }
+```
+
+4. Build and run core
+```bash
+cd contracts
+sozo build
+sozo migrate apply
+```
