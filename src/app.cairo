@@ -12,6 +12,7 @@ pub trait IMyAppActions<TContractState> {
 #[dojo::contract(namespace: "pixelaw", nomapping: true)]
 pub mod myapp_actions {
     use debug::PrintTrait;
+    use myapp::constants::{APP_KEY, APP_ICON};
     use pixelaw::core::actions::{
         IActionsDispatcher as ICoreActionsDispatcher,
         IActionsDispatcherTrait as ICoreActionsDispatcherTrait
@@ -24,7 +25,6 @@ pub mod myapp_actions {
         get_tx_info, get_caller_address, get_contract_address, get_execution_info,
         contract_address_const, ContractAddress
     };
-    use myapp::constants::{APP_KEY, APP_ICON};
 
     use super::IMyAppActions;
 
