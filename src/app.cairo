@@ -1,22 +1,12 @@
 use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
-use pixelaw::core::models::pixel::{Pixel, PixelUpdate};
-use pixelaw::core::utils::{get_core_actions, Direction, Position, DefaultParameters};
-use starknet::{get_caller_address, get_contract_address, get_execution_info, ContractAddress};
+use pixelaw::core::utils::{DefaultParameters};
+
 
 #[dojo::interface]
 pub trait IMyAppActions<TContractState> {
     fn init(ref world: IWorldDispatcher);
     fn interact(ref world: IWorldDispatcher, default_params: DefaultParameters);
 }
-
-/// APP_KEY must be unique across the entire platform
-const APP_KEY: felt252 = 'myapp';
-
-/// Core only supports unicode icons for now
-const APP_ICON: felt252 = 'U+263A';
-
-/// prefixing with BASE means using the server's default manifest.json handler
-const APP_MANIFEST: felt252 = 'BASE/manifests/myapp';
 
 /// contracts must be named as such (APP_KEY + underscore + "actions")
 #[dojo::contract(namespace: "pixelaw", nomapping: true)]
@@ -31,11 +21,12 @@ pub mod myapp_actions {
     use pixelaw::core::models::pixel::{Pixel, PixelUpdate};
     use pixelaw::core::utils::{get_core_actions, Direction, Position, DefaultParameters};
     use starknet::{
-        get_tx_info, get_caller_address, get_contract_address, get_execution_info, ContractAddress
+        get_tx_info, get_caller_address, get_contract_address, get_execution_info,
+        contract_address_const, ContractAddress
     };
+    use myapp::constants::{APP_KEY, APP_ICON};
 
     use super::IMyAppActions;
-    use super::{APP_KEY, APP_ICON, APP_MANIFEST};
 
     // impl: implement functions specified in trait
     #[abi(embed_v0)]
@@ -43,8 +34,7 @@ pub mod myapp_actions {
         /// Initialize the MyApp App (TODO I think, do we need this??)
         fn init(ref world: IWorldDispatcher) {
             let core_actions = pixelaw::core::utils::get_core_actions(world);
-
-            core_actions.update_app(APP_KEY, APP_ICON, APP_MANIFEST);
+            core_actions.new_app(contract_address_const::<0>(), APP_KEY, APP_ICON);
         }
 
         /// Put color on a certain position
