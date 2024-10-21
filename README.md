@@ -1,103 +1,105 @@
-# PixeLAW App template
-## Documents
-For additional step-by-step explanations on how to build and deploy your own PixeLAW app follow along [PixeLAW book](https://pixelaw.github.io/book/getting-started/quick-start.html)!
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://avatars.githubusercontent.com/u/140254228?s=200&v=4">  
+<img alt="Dojo logo" align="right" width="100" src="https://avatars.githubusercontent.com/u/140254228?s=200&v=4">
+</picture>
 
+<a href="https://x.com/0xpixelaw">
+<img src="https://img.shields.io/twitter/follow/0xpixelaw?style=social"/>
+</a>
+<a href="https://github.com/pixelaw/core">
+<img src="https://img.shields.io/github/stars/pixelaw/core?style=social"/>
+</a>
+
+[![discord](https://img.shields.io/badge/join-PixeLAW-green?logo=discord&logoColor=white)](https://t.co/jKDjNbFdZ5)
+
+# PixeLAW App Template
+
+Contracts written in Cairo using Dojo to showcase a Pixel World with app interoperability. Its interoperability is made possible with core actions. Apps are any other contracts that are deployed to the Pixel World.
 
 ## Prerequisites
-### Dojo
-PixeLAW is built on top of Dojo. Refer to this [page](https://book.dojoengine.org/getting-started/quick-start) to get it installed.
 
-## Getting started
-### Clone this repository
-#### Via GitHub
-Use this template to create a new repository or clone this repository locally.
+- [asdf](https://asdf-vm.com/)
+- [scarb](https://docs.swmansion.com/scarb/)
+- [dojo](https://github.com/dojoengine/dojo)
 
-## Run this code
-### Run the tests made for this app
-````console
-sozo test
-````
+## Install asdf
 
-### Local Development
-#### Run [Pixelaw/core](https://github.com/pixelaw/core)
-We are using [devcontainer](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) environments. Please open this code with vscode and launch the container with devcontainer.
+Follow the asdf installation instructions.
 
-This is the easiest way to get PixeLAW core up and running in http://localhost:3000. We recommend you to use incognito mode to browse.
+## Install dojo
 
+```
+asdf plugin add dojo https://github.com/dojoengine/asdf-dojo
+asdf install dojo 1.0.0-alpha.11
+```
 
----
-### Check the status
-If you succesfully start up PixeLAW core, it will take a while for all the core contracts to get deployed
-and start running. Wait until http://localhost:3000/manifests/core stops returning NOT FOUND. To check if you can
-start deploying your app, use the following script (this will print out "Ready for app deployment" when the core
-contracts have finished initialization):
+## Install scarb
 
-````console
-scarb run ready_for_deployment
-````
+```
+asdf plugin add scarb
+asdf install scarb 2.7.0
+```
 
-After which you can start deploying your app onto your local PixeLAW via:
+And after moving into contracts directory, the versions for these libs are set in the .tool-versions file.
 
----
-### Build and Deploy your contracts locally
-#### Building
-````console
+## Running Locally
+
+#### Terminal one (Make sure this is running)
+
+```bash
+# Run Katana
+katana --disable-fee --allowed-origins "*"
+```
+
+#### Terminal two
+
+```bash
+# Build the example
 sozo build
-````
 
-#### Deploying your contracts
-This will deploy your app to the local PixeLAW using sozo migrate.
-````console
-sozo migrate apply --name pixelaw
-````
+# Migrate the example
+sozo migrate apply
 
-#### Initializing your contracts
-This will grant writer permission to your app for any custom models made.
-````console
-scarb run initialize
-````
+# Initialize the pixelaw app
+scarb run init_auth
 
-#### Uploading your manifest
-````console
-scarb run upload_manifest
-````
+# Start Torii
+torii --world 0x263ae44e5414519a5c5a135cccaf3d9d7ee196d37e8de47a178da91f3de9b34 --allowed-origins "*"
+```
 
----
-### Deploying to Demo
-Deploying to demo is almost the same as local development. The only difference is needing
-the RPC_URL of the Demo environment, the DEMO_URL (NOTE: this must end in a slash i.e. '/')
-of the Demo App to upload your manifest to, and the world name. Both URLs and world name can be provided by us. 
-Please reach out through discord. Currently, sozo checks first if an environment variable was set in Scarb.toml for 
-rpc-url. So, comment that out before beginning with the following steps.
+### How to deploy
 
-#### Build your contracts
-````console
+you can deploy your app to our katana testnet by running the following commands:
+
+```bash
+# Deploy the pixelaw app
+sozo build -P release
+sozo migrate apply -P release
+```
+
+
+## Troubleshooting
+
+If you want to use latest dojo version, you need to clone core by yourself and modify the path in `Scarb.toml` file.
+
+1. Clone core repo
+```bash
+git clone https://github.com/pixelaw/core
+```
+
+2. Modify the path in `Scarb.toml` file
+```Scarb.toml
+pixelaw = { path = "../pixelaw/core/contracts" }
+```
+
+3. Modify version in `Scarb.toml` file in core repo
+```Scarb.toml
+dojo = { git = "https://github.com/dojoengine/dojo", tag = "v1.0.0-alpha.11" }
+```
+
+4. Build and run core
+```bash
+cd contracts
 sozo build
-````
-
-#### Deploy your contracts
-This will deploy your app to the local PixeLAW using sozo migrate.
-````console
-sozo migrate apply --name <replace-this-with-provided-world-name> --rpc-url <replace-this-with-provided-rpc-url>
-````
-
-#### Initializing your contracts
-This will grant writer permission to your app for any custom models made.
-````console
-scarb run initialize <replace-this-with-provided-rpc-url>
-````
-
-#### Uploading your manifest
-````console
-scarb run upload_manifest <replace-this-with-provided-demo-url>
-````
-
-
-### FAQs
-#### error when deploying to rpc-url
-
-Please check the `[[tool.dojo.env]]` in your `Sarb.toml`. You have to modify it correctly.
-
-Also, please verify `account_address` and `private_key`.
-
-For dojo problems, please check the version is correct.
+sozo migrate apply
+```
