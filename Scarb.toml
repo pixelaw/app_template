@@ -1,5 +1,5 @@
 [package]
-cairo-version = "=2.7.0-rc.3"
+cairo-version = "=2.7.0"
 name = "myapp"
 version = "0.0.0"
 
@@ -7,7 +7,7 @@ version = "0.0.0"
 sierra-replace-ids = true
 
 [dependencies]
-pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.3.35" }
+pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.4.4" }
 
 [[target.dojo]]
 build-external-contracts = [
@@ -20,10 +20,7 @@ build-external-contracts = [
     "pixelaw::core::models::registry::app",
     "pixelaw::core::models::registry::app_name",
     "pixelaw::core::models::registry::app_user",
-    "pixelaw::core::models::registry::app_instruction",
-    "pixelaw::core::models::registry::instruction",
     "pixelaw::core::models::registry::core_actions_address",
-    "pixelaw::core::models::permissions::permissions",
     "pixelaw::core::utils::get_core_actions",
     "pixelaw::core::utils::Direction",
     "pixelaw::core::utils::Position",
@@ -32,36 +29,6 @@ build-external-contracts = [
     "pixelaw::core::actions::IActionsDispatcher",
     "pixelaw::core::actions::IActionsDispatcherTrait"
 ]
-
-[tool.dojo]
-initializer_class_hash = "0xbeef"
-
-[tool.dojo.world.namespace]
-default = "myapp"
-mappings = { }
-
-
-
-[tool.dojo.world]
-description = "myapp world"
-name = "myapp"
-seed = "dojo_examples"
-
-
-# Dev: http://localhost:3000
-[tool.dojo.env]
-rpc_url = "http://127.0.0.1:5050/"
-account_address = "0x003c4dd268780ef738920c801edc3a75b6337bc17558c74795b530c0ff502486"
-private_key = "0x2bbf4f9fd0bbb2e60b0316c1fe0b76cf7a4d0198bd493ced9b8df2a3a24d68a"
-world_address= "0x00a712727a27defbf77122fae30c91e90ec62bba8f09a2a396eddc29b768386b"
-
-## demo.pixelaw.xyz
-#[profile.demo.tool.dojo.env]
-#rpc_url = "https://katana.demo.pixelaw.xyz/"
-#account_address = "0x003c4dd268780ef738920c801edc3a75b6337bc17558c74795b530c0ff502486"
-#private_key = "0x2bbf4f9fd0bbb2e60b0316c1fe0b76cf7a4d0198bd493ced9b8df2a3a24d68a"
-#world_address = "0x00a712727a27defbf77122fae30c91e90ec62bba8f09a2a396eddc29b768386b"
-#manifest_url="https://demo.pixelaw.xyz/manifests"
 
 [scripts]
 ready_for_deployment = "bash ./scripts/ready_for_deployment.sh"
