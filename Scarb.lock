@@ -10,13 +10,14 @@ source = "git+https://github.com/dojoengine/dojo?tag=v1.0.0-alpha.17#e6bab2d0066
 name = "myapp"
 version = "0.0.0"
 dependencies = [
+ "dojo",
  "pixelaw",
 ]
 
 [[package]]
 name = "pixelaw"
-version = "0.3.50"
-source = "git+https://github.com/pixelaw/core?tag=v0.4.4#bc5b90840337ccb3303223f24acdccad6ea50886"
+version = "0.4.4"
+source = "git+https://github.com/pixelaw/core?tag=v0.4.5#cf8fb1b426c8580216dddd649ad1da8a9f0e6dcd"
 dependencies = [
  "dojo",
 ]

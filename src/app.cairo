@@ -18,9 +18,10 @@ pub mod myapp_actions {
         IActionsDispatcherTrait as ICoreActionsDispatcherTrait
     };
 
-    use pixelaw::core::models::permissions::{Permission};
     use pixelaw::core::models::pixel::{Pixel, PixelUpdate};
-    use pixelaw::core::utils::{get_core_actions, Direction, Position, DefaultParameters};
+    use pixelaw::core::utils::{
+        get_callers, get_core_actions, Direction, Position, DefaultParameters
+    };
     use starknet::{
         get_tx_info, get_caller_address, get_contract_address, get_execution_info,
         contract_address_const, ContractAddress
@@ -47,8 +48,7 @@ pub mod myapp_actions {
             // Load important variables
             let core_actions = get_core_actions(world);
             let position = default_params.position;
-            let player = core_actions.get_player_address(default_params.for_player);
-            let system = core_actions.get_system_address(default_params.for_system);
+            let (player, system) = get_callers(world, default_params);
 
             // Load the Pixel
             let mut pixel = get!(world, (position.x, position.y), (Pixel));
@@ -78,7 +78,9 @@ pub mod myapp_actions {
                         app: Option::Some(system),
                         owner: Option::Some(player),
                         action: Option::None // Not using this feature for myapp
-                    }
+                    },
+                    default_params.area_hint, // area_hint
+                    false // hook_can_modify
                 );
         }
     }

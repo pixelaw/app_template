@@ -1,3 +1,11 @@
+# Build generated
 target/
-.idea/
 manifests/
+overlays/
+
+# IDE
+.idea/
+
+# Dirs for debugging
+pixelaw/
+storage/

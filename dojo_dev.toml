@@ -1,11 +1,11 @@
 [world]
 description = "Empty PixeLAW world"
 name = "myapp"
-seed = "dojo_examples"
+seed = "pixelaw"
 
 [namespace]
 default = "pixelaw"
-mappings = {  }
+mappings = {}
 
 [env]
 rpc_url = "http://localhost:5050/"

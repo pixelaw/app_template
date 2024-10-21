@@ -7,72 +7,51 @@ mod tests {
 
     use myapp::app::{myapp_actions, IMyAppActionsDispatcher, IMyAppActionsDispatcherTrait};
     use pixelaw::core::actions::{actions, IActionsDispatcher, IActionsDispatcherTrait};
-    use pixelaw::core::models::permissions::{permissions};
 
     use pixelaw::core::models::pixel::{Pixel, PixelUpdate};
     use pixelaw::core::models::pixel::{pixel};
     use pixelaw::core::models::registry::{app, app_name, core_actions_address};
+    use pixelaw::core::tests::helpers::{
+        setup_core, setup_core_initialized, setup_apps, setup_apps_initialized, ZERO_ADDRESS,
+        set_caller, drop_all_events, TEST_POSITION, WHITE_COLOR, RED_COLOR
+    };
     use pixelaw::core::utils::{
-        get_core_actions, encode_color, decode_color, Direction, Position, DefaultParameters
+        get_core_actions, encode_rgba, decode_rgba, Direction, Position, DefaultParameters
     };
     use starknet::class_hash::Felt252TryIntoClassHash;
 
     use zeroable::Zeroable;
 
-    // Helper function: deploys world and actions
-    fn deploy_world() -> (IWorldDispatcher, IActionsDispatcher, IMyAppActionsDispatcher) {
-        let mut models = array![
-            pixel::TEST_CLASS_HASH,
-            app::TEST_CLASS_HASH,
-            app_name::TEST_CLASS_HASH,
-            core_actions_address::TEST_CLASS_HASH,
-            permissions::TEST_CLASS_HASH,
-        ];
-        let world = spawn_test_world(["pixelaw"].span(), models.span());
-
-        // Deploy Core actions
-        let core_actions_address = world
-            .deploy_contract('salt1', actions::TEST_CLASS_HASH.try_into().unwrap());
-        let core_actions = IActionsDispatcher { contract_address: core_actions_address };
-
+    fn deploy_app(world: IWorldDispatcher) -> IMyAppActionsDispatcher {
         // Deploy MyApp actions
         let myapp_actions_address = world
             .deploy_contract('salt2', myapp_actions::TEST_CLASS_HASH.try_into().unwrap());
-        let myapp_actions = IMyAppActionsDispatcher { contract_address: myapp_actions_address };
 
-        // Setup dojo auth
-        world.grant_writer(selector_from_tag!("pixelaw-Pixel"), core_actions_address);
-        world.grant_writer(selector_from_tag!("pixelaw-App"), core_actions_address);
-        world.grant_writer(selector_from_tag!("pixelaw-AppName"), core_actions_address);
-        world.grant_writer(selector_from_tag!("pixelaw-Permissions"), core_actions_address);
-        world.grant_writer(selector_from_tag!("pixelaw-CoreActionsAddress"), core_actions_address);
-
-        // PLEASE ADD YOUR APP PERMISSIONS HERE
-
-        (world, core_actions, myapp_actions)
+        IMyAppActionsDispatcher { contract_address: myapp_actions_address }
     }
 
     #[test]
     #[available_gas(3000000000)]
     fn test_myapp_actions() {
         // Deploy everything
-        let (world, core_actions, myapp_actions) = deploy_world();
+        let (world, _core_actions, player_1, _player_2) = setup_core_initialized();
 
-        core_actions.init();
+        // Deploy MyApp actions
+        let myapp_actions = deploy_app(world);
+
         myapp_actions.init();
 
-        let player1 = starknet::contract_address_const::<0x1337>();
-        starknet::testing::set_account_contract_address(player1);
-
-        let color = encode_color(1, 1, 1, 1);
+        set_caller(player_1);
+        let color = encode_rgba(1, 1, 1, 1);
 
         myapp_actions
             .interact(
                 DefaultParameters {
-                    for_player: Zeroable::zero(),
-                    for_system: Zeroable::zero(),
+                    player_override: Option::None,
+                    system_override: Option::None,
                     position: Position { x: 1, y: 1 },
-                    color: color
+                    color: color,
+                    area_hint: Option::None
                 },
             );
 

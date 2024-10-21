@@ -7,12 +7,18 @@ version = "0.0.0"
 sierra-replace-ids = true
 
 [dependencies]
-pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.4.4" }
+pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.4.5" }
+# pixelaw = { path = "../core/contracts" }
+
+
+dojo = { git = "https://github.com/dojoengine/dojo", tag = "v1.0.0-alpha.17" }
 
 [[target.dojo]]
 build-external-contracts = [
     "pixelaw::apps::snake::app::snake",
     "pixelaw::apps::snake::app::snake_segment",
+    "pixelaw::core::models::area::area",
+    "pixelaw::core::models::area::Area",
     "pixelaw::core::models::pixel::pixel",
     "pixelaw::core::models::pixel::Pixel",
     "pixelaw::core::models::pixel::PixelUpdate",
@@ -29,6 +35,10 @@ build-external-contracts = [
     "pixelaw::core::actions::IActionsDispatcher",
     "pixelaw::core::actions::IActionsDispatcherTrait"
 ]
+
+[tool.fmt]
+sort-module-level-items = true
+
 
 [scripts]
 ready_for_deployment = "bash ./scripts/ready_for_deployment.sh"
