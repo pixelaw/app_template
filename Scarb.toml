@@ -7,7 +7,7 @@ version = "0.0.0"
 sierra-replace-ids = true
 
 [dependencies]
-pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.4.5" }
+pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.4.6" }
 # pixelaw = { path = "../core/contracts" }
 
 
