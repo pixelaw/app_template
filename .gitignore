@@ -7,5 +7,5 @@ overlays/
 .idea/
 
 # Dirs for debugging
-pixelaw/
-storage/
+pixelaw
+storage
