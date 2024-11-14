@@ -1,16 +1,17 @@
-use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
+
 use pixelaw::core::utils::{DefaultParameters};
 
 
-#[dojo::interface]
-pub trait IMyAppActions<TContractState> {
-    fn init(ref world: IWorldDispatcher);
-    fn interact(ref world: IWorldDispatcher, default_params: DefaultParameters);
+#[starknet::interface]
+pub trait IMyAppActions<T> {
+    fn init(ref self: T);
+    fn interact(ref self: T, default_params: DefaultParameters);
 }
 
 /// contracts must be named as such (APP_KEY + underscore + "actions")
-#[dojo::contract(namespace: "pixelaw", nomapping: true)]
+#[dojo::contract]
 pub mod myapp_actions {
+    use dojo::model::{ModelStorage};
     use debug::PrintTrait;
     use myapp::constants::{APP_KEY, APP_ICON};
     use pixelaw::core::actions::{
@@ -32,9 +33,10 @@ pub mod myapp_actions {
     // impl: implement functions specified in trait
     #[abi(embed_v0)]
     impl ActionsImpl of IMyAppActions<ContractState> {
-        /// Initialize the MyApp App (TODO I think, do we need this??)
-        fn init(ref world: IWorldDispatcher) {
-            let core_actions = pixelaw::core::utils::get_core_actions(world);
+        /// Initialize the MyApp App
+        fn init(ref self: ContractState) {
+            let mut world = self.world(@"pixelaw");
+            let core_actions = pixelaw::core::utils::get_core_actions(ref world);
             core_actions.new_app(contract_address_const::<0>(), APP_KEY, APP_ICON);
         }
 
@@ -44,14 +46,16 @@ pub mod myapp_actions {
         ///
         /// * `position` - Position of the pixel.
         /// * `new_color` - Color to set the pixel to.
-        fn interact(ref world: IWorldDispatcher, default_params: DefaultParameters) {
+        fn interact(ref self: ContractState, default_params: DefaultParameters) {
+            let mut world = self.world(@"pixelaw");
             // Load important variables
-            let core_actions = get_core_actions(world);
+            let core_actions = get_core_actions(ref world);
             let position = default_params.position;
-            let (player, system) = get_callers(world, default_params);
+            let (player, system) = get_callers(ref world, default_params);
 
             // Load the Pixel
-            let mut pixel = get!(world, (position.x, position.y), (Pixel));
+            
+            let mut pixel: Pixel = world.read_model((position.x, position.y));
 
             // TODO: Load MyApp App Settings like the fade steptime
             // For example for the Cooldown feature
