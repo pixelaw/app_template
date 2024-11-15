@@ -1,20 +1,26 @@
-#[cfg(test)]
 mod tests {
     use debug::PrintTrait;
-    use dojo::utils::test::{spawn_test_world};
 
-    use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
-
-    use myapp::app::{myapp_actions, IMyAppActionsDispatcher, IMyAppActionsDispatcherTrait};
-    use pixelaw::core::actions::{actions, IActionsDispatcher, IActionsDispatcherTrait};
-
-    use pixelaw::core::models::pixel::{Pixel, PixelUpdate};
-    use pixelaw::core::models::pixel::{pixel};
-    use pixelaw::core::models::registry::{app, app_name, core_actions_address};
-    use pixelaw::core::tests::helpers::{
-        setup_core, setup_core_initialized, setup_apps, setup_apps_initialized, ZERO_ADDRESS,
-        set_caller, drop_all_events, TEST_POSITION, WHITE_COLOR, RED_COLOR
+    use dojo::model::{ModelStorage};
+    use dojo::world::{
+        world, IWorldDispatcher, IWorldDispatcherTrait, WorldStorageTrait, WorldStorage
     };
+    use dojo_cairo_test::{
+        spawn_test_world, NamespaceDef, TestResource, ContractDefTrait, ContractDef,
+        WorldStorageTestTrait
+    };
+    use myapp::app::{
+        myapp_actions, IMyAppActionsDispatcher, IMyAppActionsDispatcherTrait, m_Player, Player,
+        e_Highscore
+    };
+    use pixelaw::core::actions::{actions, IActionsDispatcher, IActionsDispatcherTrait};
+    use pixelaw::core::models::pixel::{Pixel, PixelUpdate};
+    use pixelaw::core::models::registry::{App, AppName, CoreActionsAddress};
+    use pixelaw::core::test_helpers::{
+        update_test_world, setup_core, setup_core_initialized, setup_apps, setup_apps_initialized,
+        ZERO_ADDRESS, set_caller, drop_all_events, TEST_POSITION, WHITE_COLOR, RED_COLOR
+    };
+
     use pixelaw::core::utils::{
         get_core_actions, encode_rgba, decode_rgba, Direction, Position, DefaultParameters
     };
@@ -22,11 +28,26 @@ mod tests {
 
     use zeroable::Zeroable;
 
-    fn deploy_app(world: IWorldDispatcher) -> IMyAppActionsDispatcher {
-        // Deploy MyApp actions
-        let myapp_actions_address = world
-            .deploy_contract('salt2', myapp_actions::TEST_CLASS_HASH.try_into().unwrap());
 
+    fn deploy_app(ref world: WorldStorage) -> IMyAppActionsDispatcher {
+        let ndef = NamespaceDef {
+            namespace: "pixelaw", resources: [
+                TestResource::Model(m_Player::TEST_CLASS_HASH),
+                TestResource::Event(e_Highscore::TEST_CLASS_HASH),
+                TestResource::Contract(myapp_actions::TEST_CLASS_HASH),
+            ].span()
+        };
+
+        let cdefs: Span<ContractDef> = [
+            ContractDefTrait::new(@"pixelaw", @"myapp_actions")
+                .with_writer_of([dojo::utils::bytearray_hash(@"pixelaw")].span())
+        ].span();
+
+        update_test_world(ref world, [ndef].span());
+
+        world.sync_perms_and_inits(cdefs);
+
+        let (myapp_actions_address, _) = world.dns(@"myapp_actions").unwrap();
         IMyAppActionsDispatcher { contract_address: myapp_actions_address }
     }
 
@@ -34,10 +55,10 @@ mod tests {
     #[available_gas(3000000000)]
     fn test_myapp_actions() {
         // Deploy everything
-        let (world, _core_actions, player_1, _player_2) = setup_core_initialized();
+        let (mut world, _core_actions, player_1, _player_2) = setup_core_initialized();
 
         // Deploy MyApp actions
-        let myapp_actions = deploy_app(world);
+        let myapp_actions = deploy_app(ref world);
 
         myapp_actions.init();
 
@@ -55,7 +76,7 @@ mod tests {
                 },
             );
 
-        let pixel_1_1 = get!(world, (1, 1), (Pixel));
+        let pixel_1_1: Pixel = world.read_model((1, 1));
         assert(pixel_1_1.color == color, 'should be the color');
 
         'Passed test'.print();

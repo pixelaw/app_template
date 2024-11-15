@@ -1,5 +1,22 @@
-
 use pixelaw::core::utils::{DefaultParameters};
+use starknet::ContractAddress;
+
+
+#[derive(Copy, Drop, Serde)]
+#[dojo::model]
+pub struct Player {
+    #[key]
+    pub id: u64,
+    pub score: u64
+}
+
+#[derive(Copy, Drop, Serde)]
+#[dojo::event]
+pub struct Highscore {
+    #[key]
+    player_id: u64,
+    score: u64
+}
 
 
 #[starknet::interface]
@@ -11,8 +28,8 @@ pub trait IMyAppActions<T> {
 /// contracts must be named as such (APP_KEY + underscore + "actions")
 #[dojo::contract]
 pub mod myapp_actions {
-    use dojo::model::{ModelStorage};
     use debug::PrintTrait;
+    use dojo::model::{ModelStorage};
     use myapp::constants::{APP_KEY, APP_ICON};
     use pixelaw::core::actions::{
         IActionsDispatcher as ICoreActionsDispatcher,
@@ -27,8 +44,9 @@ pub mod myapp_actions {
         get_tx_info, get_caller_address, get_contract_address, get_execution_info,
         contract_address_const, ContractAddress
     };
-
     use super::IMyAppActions;
+
+    use super::{Player};
 
     // impl: implement functions specified in trait
     #[abi(embed_v0)]
@@ -54,7 +72,7 @@ pub mod myapp_actions {
             let (player, system) = get_callers(ref world, default_params);
 
             // Load the Pixel
-            
+
             let mut pixel: Pixel = world.read_model((position.x, position.y));
 
             // TODO: Load MyApp App Settings like the fade steptime

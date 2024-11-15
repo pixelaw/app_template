@@ -1,7 +1,6 @@
 # Build generated
 target/
-manifests/
-overlays/
+manifest_dev.json
 
 # IDE
 .idea/

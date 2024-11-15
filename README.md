@@ -30,7 +30,7 @@ Follow the asdf installation instructions.
 
 ```
 asdf plugin add dojo https://github.com/dojoengine/asdf-dojo
-asdf install dojo 1.0.0-alpha.11
+asdf install dojo 1.0.0
 ```
 
 ## Install scarb
@@ -48,7 +48,7 @@ And after moving into contracts directory, the versions for these libs are set i
 
 ```bash
 # Run Katana
-katana --disable-fee --allowed-origins "*"
+katana --dev --dev.no-fee --http.cors_origins "*"
 ```
 
 #### Terminal two
@@ -58,13 +58,13 @@ katana --disable-fee --allowed-origins "*"
 sozo build
 
 # Migrate the example
-sozo migrate apply
+sozo migrate
 
 # Initialize the pixelaw app
 scarb run init_auth
 
 # Start Torii
-torii --world 0x263ae44e5414519a5c5a135cccaf3d9d7ee196d37e8de47a178da91f3de9b34 --allowed-origins "*"
+torii --world 0x6f130c8e150882e39cbe878c650c8f35c86579180dbc77d0c1cbe169449b5f6 --http.cors_origins "*"
 ```
 
 ### How to deploy
