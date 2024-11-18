@@ -30,7 +30,7 @@ Follow the asdf installation instructions.
 
 ```
 asdf plugin add dojo https://github.com/dojoengine/asdf-dojo
-asdf install dojo 1.0.0
+asdf install dojo 1.0.1
 ```
 
 ## Install scarb
@@ -94,7 +94,7 @@ pixelaw = { path = "../pixelaw/core/contracts" }
 
 3. Modify version in `Scarb.toml` file in core repo
 ```Scarb.toml
-dojo = { git = "https://github.com/dojoengine/dojo", tag = "v1.0.0-alpha.11" }
+dojo = { git = "https://github.com/dojoengine/dojo", tag = "v1.0.1-alpha.11" }
 ```
 
 4. Build and run core
