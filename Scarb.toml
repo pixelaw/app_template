@@ -7,13 +7,13 @@ version = "0.0.0"
 sierra-replace-ids = true
 
 [dependencies]
-pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.5.7" }
+pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.5.10" }
 #pixelaw = { path = "../core/contracts" }
 dojo = { git = "https://github.com/dojoengine/dojo", tag = "v1.0.1" }
 
 [dev-dependencies]
 dojo_cairo_test = { git = "https://github.com/dojoengine/dojo", tag = "v1.0.1" }
-pixelaw_test_helpers = { git = "https://github.com/pixelaw/core", tag = "v0.5.7" }
+pixelaw_test_helpers = { git = "https://github.com/pixelaw/core", tag = "v0.5.10" }
 #pixelaw_test_helpers = { path = "../core/test_helpers" }
 
 [[target.starknet-contract]]

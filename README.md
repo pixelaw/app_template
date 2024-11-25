@@ -16,90 +16,48 @@
 
 Contracts written in Cairo using Dojo to showcase a Pixel World with app interoperability. Its interoperability is made possible with core actions. Apps are any other contracts that are deployed to the Pixel World.
 
-## Prerequisites
+## Getting started
+The easiest way is to use the VSCode DevContainer, all tools will be installed already. Keep reading for this approach. You can also install all tools in your local environment, see [Local Environment](README.local.md).
+This README is all about using the Devcontainer (recommended)
 
-- [asdf](https://asdf-vm.com/)
-- [scarb](https://docs.swmansion.com/scarb/)
-- [dojo](https://github.com/dojoengine/dojo)
+## 1. Devcontainer
+Open this folder in VSCode, and build/run the devcontainer.
+You will see a series of commands executed in the terminal, which you can close when done. After that you have a fully configured environment with Katana, Torii and the Pixelaw server running. Use `klog`, `tlog` and `slog` to see the logs for each. 
 
-## Install asdf
 
-Follow the asdf installation instructions.
+## 2. Accounts
+When doing local development, you'll use the build-in Katana accounts which have been preconfigured.
 
-## Install dojo
+When ready to deploy to Sepolia testnet, you'll have to create and fund an account, and install the keystore file in your project.
+You can use the `scripts/account_from_key.sh` for this.
 
+## 3. Build/Deployment
+All normal Dojo tooling is available, see the    [Dojo Documentation](https://book.dojoengine.org/toolchain/sozo)
+
+### 3.1 Build
+This will compile the Cairo contracts in `/src` 
 ```
-asdf plugin add dojo https://github.com/dojoengine/asdf-dojo
-asdf install dojo 1.0.1
-```
-
-## Install scarb
-
-```
-asdf plugin add scarb
-asdf install scarb 2.7.0
-```
-
-And after moving into contracts directory, the versions for these libs are set in the .tool-versions file.
-
-## Running Locally
-
-#### Terminal one (Make sure this is running)
-
-```bash
-# Run Katana
-katana --dev --dev.no-fee --http.cors_origins "*"
-```
-
-#### Terminal two
-
-```bash
-# Build the example
 sozo build
+```
 
-# Migrate the example
+### 3.2 Deployment
+Deploy (migrate) the contracts  
+```
 sozo migrate
-
-# Initialize the pixelaw app
-scarb run init_auth
-
-# Start Torii
-torii --world 0x6f130c8e150882e39cbe878c650c8f35c86579180dbc77d0c1cbe169449b5f6 --http.cors_origins "*"
 ```
 
-### How to deploy
+## 4. Maintenance
+The idea is that you'll copy this template and create your own PixeLAW app with it. So eventually the versions of Core, Dojo may get outdated.
 
-you can deploy your app to our katana testnet by running the following commands:
+### 4.1 Upgrade Dojo
+To upgrade Dojo, you have to upgrade Pixelaw Core (see below)
 
-```bash
-# Deploy the pixelaw app
-sozo build -P release
-sozo migrate apply -P release
-```
-
-
-## Troubleshooting
-
-If you want to use latest dojo version, you need to clone core by yourself and modify the path in `Scarb.toml` file.
-
-1. Clone core repo
-```bash
-git clone https://github.com/pixelaw/core
-```
-
-2. Modify the path in `Scarb.toml` file
-```Scarb.toml
-pixelaw = { path = "../pixelaw/core/contracts" }
-```
-
-3. Modify version in `Scarb.toml` file in core repo
-```Scarb.toml
-dojo = { git = "https://github.com/dojoengine/dojo", tag = "v1.0.1-alpha.11" }
-```
-
-4. Build and run core
-```bash
-cd contracts
-sozo build
-sozo migrate apply
-```
+### 4.2 Upgrade Core
+The easiest is to do a full-text search/replace on the Core version number (for example `0.5.10`) and replace it with the new version. Then it's easiest to 
+1. Delete the `/target/` folder
+1. Delete the `Scarb.lock` file
+1. Full Rebuild using `sozo build`
+1. Fix any compile issues
+1. Run (integration) tests with `sozo test`
+1. Fix any test issues
+1. If applicable: Upgrade your live code using `sozo migrate --profile sepolia` 

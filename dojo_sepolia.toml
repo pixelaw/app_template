@@ -10,5 +10,6 @@ mappings = {}
 [env]
 rpc_url = "https://starknet-sepolia.public.blastapi.io/rpc/v0_7"
 keystore_path = "accounts/sepolia.deployer.keystore.json"
-account_address = "0x00BAcDF8Ccd3AA527caB838E5Ea45e045dBb0E12E2da4434579DF99d9233253B"
 world_address = "0x6f130c8e150882e39cbe878c650c8f35c86579180dbc77d0c1cbe169449b5f6"
+
+account_address = "YOUR_ACCOUNT"

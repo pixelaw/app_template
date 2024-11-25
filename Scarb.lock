@@ -34,16 +34,16 @@ dependencies = [
 
 [[package]]
 name = "pixelaw"
-version = "0.5.7"
-source = "git+https://github.com/pixelaw/core?tag=v0.5.7#96260a5d1142e24eb30d63eb69ed47c036081376"
+version = "0.5.10"
+source = "git+https://github.com/pixelaw/core?tag=v0.5.10#96260a5d1142e24eb30d63eb69ed47c036081376"
 dependencies = [
  "dojo",
 ]
 
 [[package]]
 name = "pixelaw_test_helpers"
-version = "0.5.7"
-source = "git+https://github.com/pixelaw/core?tag=v0.5.7#96260a5d1142e24eb30d63eb69ed47c036081376"
+version = "0.5.10"
+source = "git+https://github.com/pixelaw/core?tag=v0.5.10#96260a5d1142e24eb30d63eb69ed47c036081376"
 dependencies = [
  "dojo",
  "dojo_cairo_test",
