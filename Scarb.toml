@@ -42,6 +42,8 @@ build-external-contracts = [
 sort-module-level-items = true
 
 
+[profile.sepolia]
+
 [scripts]
 ready_for_deployment = "bash ./scripts/ready_for_deployment.sh"
 initialize = "bash ./scripts/default_auth.sh"

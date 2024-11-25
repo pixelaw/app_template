@@ -8,3 +8,7 @@ manifest_dev.json
 # Dirs for debugging
 pixelaw
 storage
+
+
+# Accounts
+*.keystore.json
