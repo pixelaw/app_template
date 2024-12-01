@@ -53,7 +53,7 @@ The idea is that you'll copy this template and create your own PixeLAW app with 
 To upgrade Dojo, you have to upgrade Pixelaw Core (see below)
 
 ### 4.2 Upgrade Core
-The easiest is to do a full-text search/replace on the Core version number (for example `0.5.11`) and replace it with the new version. Then it's easiest to 
+The easiest is to do a full-text search/replace on the Core version number (for example `0.5.12`) and replace it with the new version. Then it's easiest to 
 1. Delete the `/target/` folder
 1. Delete the `Scarb.lock` file
 1. Full Rebuild using `sozo build`

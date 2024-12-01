@@ -7,35 +7,22 @@ version = "0.0.0"
 sierra-replace-ids = true
 
 [dependencies]
-pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.5.11" }
+pixelaw = { git = "https://github.com/pixelaw/core", tag = "v0.5.12" }
 #pixelaw = { path = "../core/contracts" }
-dojo = { git = "https://github.com/dojoengine/dojo", tag = "v1.0.2" }
+dojo = { git = "https://github.com/dojoengine/dojo", tag = "v1.0.3" }
 
 [dev-dependencies]
-dojo_cairo_test = { git = "https://github.com/dojoengine/dojo", tag = "v1.0.2" }
-pixelaw_test_helpers = { git = "https://github.com/pixelaw/core", tag = "v0.5.11" }
+dojo_cairo_test = { git = "https://github.com/dojoengine/dojo", tag = "v1.0.3" }
+pixelaw_test_helpers = { git = "https://github.com/pixelaw/core", tag = "v0.5.12" }
 #pixelaw_test_helpers = { path = "../core/test_helpers" }
 
 [[target.starknet-contract]]
 sierra = true
 build-external-contracts = [
     "dojo::world::world_contract::world",
-#    "pixelaw::core::models::area::Area",
-#    "pixelaw::core::models::pixel::Pixel",
-#    "pixelaw::core::models::pixel::PixelUpdate",
-#    "pixelaw::core::models::queue::QueueItem",
-#    "pixelaw::core::models::registry::App",
-#    "pixelaw::core::models::registry::AppName",
-#    "pixelaw::core::models::registry::CoreActionsAddress",
-#    "pixelaw::core::utils::get_core_actions",
-#    "pixelaw::core::utils::Direction",
-#    "pixelaw::core::utils::Position",
-#    "pixelaw::core::utils::DefaultParameters",
     "pixelaw::core::actions::actions",
     "pixelaw::apps::paint::app::paint_actions",
     "pixelaw::apps::snake::app::snake_actions",
-#    "pixelaw::core::actions::IActionsDispatcher",
-#    "pixelaw::core::actions::IActionsDispatcherTrait"
 ]
 
 [tool.fmt]

@@ -15,7 +15,7 @@ Follow the asdf installation instructions.
 
 ```
 asdf plugin add dojo https://github.com/dojoengine/asdf-dojo
-asdf install dojo 1.0.2
+asdf install dojo 1.0.3
 ```
 
 ### Install scarb
@@ -48,7 +48,7 @@ sozo migrate
 scarb run init_auth
 
 # Start Torii
-torii --world 0x6f130c8e150882e39cbe878c650c8f35c86579180dbc77d0c1cbe169449b5f6 --http.cors_origins "*"
+torii --world 0x2bf4d3aa0dced89d37d8c3b4ff6a05895c0af32ff3baf9b02abf8504e53eaad --http.cors_origins "*"
 ```
 
 ### How to deploy
