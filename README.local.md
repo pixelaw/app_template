@@ -22,7 +22,7 @@ asdf install dojo 1.0.4
 
 ```
 asdf plugin add scarb
-asdf install scarb 2.7.0
+asdf install scarb 2.8.4
 ```
 
 
