@@ -12,3 +12,6 @@ storage
 
 # Accounts
 *.keystore.json
+
+# Should be managed locally
+Scarb.lock
