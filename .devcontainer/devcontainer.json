@@ -1,6 +1,6 @@
 {
   "name": "My Project",
-  "image": "ghcr.io/pixelaw/core:0.5.16",
+  "image": "ghcr.io/pixelaw/core:0.5.17",
   "forwardPorts": [
     5050,
     8080,
@@ -31,7 +31,7 @@
       // Set *default* container specific settings.json values on container create.
       "settings": {
         "cairo1.enableLanguageServer": true,
-        "cairo1.languageServerPath": "${userHome}/.asdf/installs/dojo/1.0.5/bin/dojo-language-server",
+        "cairo1.languageServerPath": "${userHome}/.asdf/installs/dojo/1.0.6/bin/dojo-language-server",
         "cairo1.enableScarb": true,
         "cairo1.scarbPath": "${userHome}/.asdf/installs/scarb/2.8.4/bin/scarb",
         "lldb.executable": "/usr/bin/lldb",
