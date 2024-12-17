@@ -1,6 +1,6 @@
 {
   "name": "My Project",
-  "image": "ghcr.io/pixelaw/core:0.5.17",
+  "image": "ghcr.io/pixelaw/core:0.5.19",
   "forwardPorts": [
     5050,
     8080,
@@ -16,10 +16,10 @@
     "PUBLIC_TORII_URL": "http://localhost:8080",
     "PUBLIC_RELAY_URL": "http://localhost:8080",
     "WORLD_ADDRESS": "0x2bf4d3aa0dced89d37d8c3b4ff6a05895c0af32ff3baf9b02abf8504e53eaad",
+    "WORLD_ID": "local-empty",
     "SERVER_PORT": "3000",
     // For web
-    "DEPLOYMENT": "local",
-    "DEPLOYMENTS_URL": "https://raw.githubusercontent.com/pixelaw/config/refs/heads/main/web.config.json"
+    "WORLDS_URL": "https://raw.githubusercontent.com/pixelaw/config/refs/heads/main/web.config.json"
   },
   "postStartCommand": [
     "/pixelaw/scripts/startup.sh"
