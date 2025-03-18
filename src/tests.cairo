@@ -20,7 +20,7 @@ mod tests {
     use pixelaw::core::utils::{
         get_core_actions, encode_rgba, decode_rgba, Direction, Position, DefaultParameters
     };
-    use pixelaw_test_helpers::{
+    use pixelaw::tests::test_helpers::{
         update_test_world, setup_core, setup_core_initialized, setup_apps, setup_apps_initialized,
         ZERO_ADDRESS, set_caller, drop_all_events, TEST_POSITION, WHITE_COLOR, RED_COLOR
     };
