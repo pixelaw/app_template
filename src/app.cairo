@@ -1,5 +1,4 @@
 use pixelaw::core::utils::{DefaultParameters};
-use starknet::ContractAddress;
 
 
 #[derive(Copy, Drop, Serde)]
@@ -7,7 +6,7 @@ use starknet::ContractAddress;
 pub struct Player {
     #[key]
     pub id: u64,
-    pub score: u64
+    pub score: u64,
 }
 
 #[derive(Copy, Drop, Serde)]
@@ -15,7 +14,7 @@ pub struct Player {
 pub struct Highscore {
     #[key]
     player_id: u64,
-    score: u64
+    score: u64,
 }
 
 
@@ -28,25 +27,14 @@ pub trait IMyAppActions<T> {
 /// contracts must be named as such (APP_KEY + underscore + "actions")
 #[dojo::contract]
 pub mod myapp_actions {
-    use debug::PrintTrait;
     use dojo::model::{ModelStorage};
-    use myapp::constants::{APP_KEY, APP_ICON};
-    use pixelaw::core::actions::{
-        IActionsDispatcher as ICoreActionsDispatcher,
-        IActionsDispatcherTrait as ICoreActionsDispatcherTrait
-    };
-
+    use myapp::constants::{APP_ICON, APP_KEY};
+    use pixelaw::core::actions::{IActionsDispatcherTrait as ICoreActionsDispatcherTrait};
     use pixelaw::core::models::pixel::{Pixel, PixelUpdate};
-    use pixelaw::core::utils::{
-        get_callers, get_core_actions, Direction, Position, DefaultParameters
-    };
-    use starknet::{
-        get_tx_info, get_caller_address, get_contract_address, get_execution_info,
-        contract_address_const, ContractAddress
-    };
+    use pixelaw::core::utils::{DefaultParameters, get_callers, get_core_actions};
+    use starknet::{contract_address_const};
     use super::IMyAppActions;
 
-    use super::{Player};
 
     // impl: implement functions specified in trait
     #[abi(embed_v0)]
@@ -81,9 +69,11 @@ pub mod myapp_actions {
 
             // Check if 5 seconds have passed or if the sender is the owner
             assert(
-                pixel.owner.is_zero() || (pixel.owner) == player || starknet::get_block_timestamp()
+                pixel.owner == contract_address_const::<0>()
+                    || (pixel.owner) == player
+                    || starknet::get_block_timestamp()
                     - pixel.timestamp < COOLDOWN_SECS,
-                'Cooldown not over'
+                'Cooldown not over',
             );
 
             // We can now update color of the pixel
