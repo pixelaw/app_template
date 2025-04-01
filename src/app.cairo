@@ -30,7 +30,7 @@ pub mod myapp_actions {
     use dojo::model::{ModelStorage};
     use myapp::constants::{APP_ICON, APP_KEY};
     use pixelaw::core::actions::{IActionsDispatcherTrait as ICoreActionsDispatcherTrait};
-    use pixelaw::core::models::pixel::{Pixel, PixelUpdate};
+    use pixelaw::core::models::pixel::{Pixel, PixelUpdate, PixelUpdateResultTraitImpl};
     use pixelaw::core::utils::{DefaultParameters, get_callers, get_core_actions};
     use starknet::{contract_address_const};
     use super::IMyAppActions;
@@ -93,7 +93,7 @@ pub mod myapp_actions {
                     },
                     default_params.area_hint, // area_hint
                     false // hook_can_modify
-                );
+                ).is_ok();
         }
     }
 }
