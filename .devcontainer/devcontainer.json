@@ -1,6 +1,6 @@
 {
   "name": "My Project",
-  "image": "ghcr.io/pixelaw/core-populated:0.6.26",
+  "image": "ghcr.io/pixelaw/core-populated:0.6.28",
   "forwardPorts": [
     5050,
     8080,

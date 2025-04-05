@@ -1,20 +1,14 @@
 use pixelaw::core::utils::{DefaultParameters};
-
+use starknet::{ContractAddress};
 
 #[derive(Copy, Drop, Serde)]
 #[dojo::model]
-pub struct Player {
+pub struct ClickGame {
     #[key]
-    pub id: u64,
-    pub score: u64,
-}
-
-#[derive(Copy, Drop, Serde)]
-#[dojo::event]
-pub struct Highscore {
+    x: u16,
     #[key]
-    player_id: u64,
-    score: u64,
+    y: u16,
+    pub last_player: ContractAddress,
 }
 
 
@@ -32,7 +26,7 @@ pub mod myapp_actions {
     use pixelaw::core::models::pixel::{Pixel, PixelUpdate, PixelUpdateResultTraitImpl};
     use pixelaw::core::utils::{DefaultParameters, get_callers, get_core_actions};
     use starknet::{contract_address_const};
-    use super::IMyAppActions;
+    use super::{ClickGame, IMyAppActions};
 
     /// Initialize the MyApp App
     fn dojo_init(ref self: ContractState) {
@@ -51,28 +45,33 @@ pub mod myapp_actions {
         /// * `position` - Position of the pixel.
         /// * `new_color` - Color to set the pixel to.
         fn interact(ref self: ContractState, default_params: DefaultParameters) {
-            let mut world = self.world(@"pixelaw");
+            let mut core_world = self.world(@"pixelaw");
+            let mut app_world = self.world(@"myapp");
+
             // Load important variables
-            let core_actions = get_core_actions(ref world);
+            let core_actions = get_core_actions(ref core_world);
+            let (player, system) = get_callers(ref core_world, default_params);
+
             let position = default_params.position;
-            let (player, system) = get_callers(ref world, default_params);
 
             // Load the Pixel
+            let mut pixel: Pixel = core_world.read_model((position.x, position.y));
+            let mut game: ClickGame = app_world.read_model((position.x, position.y));
 
-            let mut pixel: Pixel = world.read_model((position.x, position.y));
-
-            // TODO: Load MyApp App Settings like the fade steptime
-            // For example for the Cooldown feature
-            let COOLDOWN_SECS = 5;
-
-            // Check if 5 seconds have passed or if the sender is the owner
-            assert(
-                pixel.owner == contract_address_const::<0>()
-                    || (pixel.owner) == player
-                    || starknet::get_block_timestamp()
-                    - pixel.timestamp < COOLDOWN_SECS,
-                'Cooldown not over',
+            // Check that its not the same player clicking
+            assert!(
+                game.last_player == contract_address_const::<0>() || game.last_player == player,
+                "{:?}_{:?} Let someone else first!",
+                position.x,
+                position.y,
             );
+
+            game.last_player = player;
+            app_world.write_model(@game);
+
+            // Increment the number in pixel.text
+            let mut current_count: u64 = pixel.text.try_into().unwrap();
+            current_count = (current_count + 1).into();
 
             // We can now update color of the pixel
             core_actions
@@ -84,7 +83,7 @@ pub mod myapp_actions {
                         y: position.y,
                         color: Option::Some(default_params.color),
                         timestamp: Option::None,
-                        text: Option::None,
+                        text: Option::Some(current_count.into()),
                         app: Option::Some(system),
                         owner: Option::Some(player),
                         action: Option::None // Not using this feature for myapp
@@ -92,7 +91,7 @@ pub mod myapp_actions {
                     default_params.area_hint, // area_hint
                     false // hook_can_modify
                 )
-                .is_ok();
+                .unwrap();
         }
     }
 }

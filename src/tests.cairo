@@ -1,12 +1,10 @@
 use dojo::model::{ModelStorage};
-use dojo::world::{WorldStorage, WorldStorageTrait, IWorldDispatcherTrait};
+use dojo::world::{IWorldDispatcherTrait, WorldStorage, WorldStorageTrait};
 
 use dojo_cairo_test::{
     ContractDef, ContractDefTrait, NamespaceDef, TestResource, WorldStorageTestTrait,
 };
-use myapp::app::{
-    IMyAppActionsDispatcher, IMyAppActionsDispatcherTrait, e_Highscore, m_Player, myapp_actions,
-};
+use myapp::app::{IMyAppActionsDispatcher, IMyAppActionsDispatcherTrait, m_ClickGame, myapp_actions};
 use pixelaw::core::models::pixel::{Pixel};
 
 
@@ -23,8 +21,7 @@ fn deploy_app(ref world: WorldStorage) -> IMyAppActionsDispatcher {
     let ndef = NamespaceDef {
         namespace: namespace.clone(),
         resources: [
-            TestResource::Model(m_Player::TEST_CLASS_HASH),
-            TestResource::Event(e_Highscore::TEST_CLASS_HASH),
+            TestResource::Model(m_ClickGame::TEST_CLASS_HASH),
             TestResource::Contract(myapp_actions::TEST_CLASS_HASH),
         ]
             .span(),
@@ -60,9 +57,6 @@ fn test_myapp_actions() {
     // Deploy MyApp actions
     let myapp_actions = deploy_app(ref world);
 
-    myapp_actions.init();
-
-
     set_caller(player_1);
 
     let color = encode_rgba(1, 1, 1, 1);
@@ -81,7 +75,6 @@ fn test_myapp_actions() {
     let pixel_1_1: Pixel = world.read_model((1, 1));
 
     assert(pixel_1_1.color == color, 'should be the color');
-
     //println!("Passed test");
 }
 

@@ -47,10 +47,3 @@ sort-module-level-items = true
 
 [profile.sepolia]
 
-[scripts]
-ready_for_deployment = "bash ./scripts/ready_for_deployment.sh"
-initialize = "bash ./scripts/default_auth.sh"
-upload_manifest = "bash ./scripts/upload_manifest.sh"
-ready_for_deployment_zsh = "zsh ./scripts/ready_for_deployment.sh"
-initialize_zsh = "zsh ./scripts/default_auth.sh"
-upload_manifest_zsh = "zsh ./scripts/upload_manifest.sh"
