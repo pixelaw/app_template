@@ -20,7 +20,6 @@ pub struct Highscore {
 
 #[starknet::interface]
 pub trait IMyAppActions<T> {
-    fn init(ref self: T);
     fn interact(ref self: T, default_params: DefaultParameters);
 }
 
@@ -35,17 +34,16 @@ pub mod myapp_actions {
     use starknet::{contract_address_const};
     use super::IMyAppActions;
 
+    /// Initialize the MyApp App
+    fn dojo_init(ref self: ContractState) {
+        let mut world = self.world(@"pixelaw");
+        let core_actions = pixelaw::core::utils::get_core_actions(ref world);
+        core_actions.new_app(contract_address_const::<0>(), APP_KEY, APP_ICON);
+    }
 
     // impl: implement functions specified in trait
     #[abi(embed_v0)]
     impl ActionsImpl of IMyAppActions<ContractState> {
-        /// Initialize the MyApp App
-        fn init(ref self: ContractState) {
-            let mut world = self.world(@"pixelaw");
-            let core_actions = pixelaw::core::utils::get_core_actions(ref world);
-            core_actions.new_app(contract_address_const::<0>(), APP_KEY, APP_ICON);
-        }
-
         /// Put color on a certain position
         ///
         /// # Arguments
@@ -93,7 +91,8 @@ pub mod myapp_actions {
                     },
                     default_params.area_hint, // area_hint
                     false // hook_can_modify
-                ).is_ok();
+                )
+                .is_ok();
         }
     }
 }
