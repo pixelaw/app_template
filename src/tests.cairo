@@ -9,7 +9,7 @@ use pixelaw::core::models::pixel::{Pixel};
 
 
 use pixelaw::core::utils::{DefaultParameters, Position, encode_rgba};
-use pixelaw_testing::helpers::{set_caller, setup_core_initialized, update_test_world};
+use pixelaw_testing::helpers::{set_caller, setup_core, update_test_world};
 
 
 fn deploy_app(ref world: WorldStorage) -> IMyAppActionsDispatcher {
@@ -26,7 +26,6 @@ fn deploy_app(ref world: WorldStorage) -> IMyAppActionsDispatcher {
         ]
             .span(),
     };
-
     let cdefs: Span<ContractDef> = [
         ContractDefTrait::new(@namespace, @"myapp_actions")
             .with_writer_of([dojo::utils::bytearray_hash(@namespace)].span())
@@ -51,28 +50,29 @@ fn deploy_app(ref world: WorldStorage) -> IMyAppActionsDispatcher {
 #[test]
 fn test_myapp_actions() {
     // Deploy everything
-    let (mut world, _core_actions, player_1, _player_2) = setup_core_initialized();
+    let (mut world, _core_actions, player_1, _player_2) = setup_core();
     //println!("Started test");
 
+    println!("1");
     // Deploy MyApp actions
     let myapp_actions = deploy_app(ref world);
 
     set_caller(player_1);
 
     let color = encode_rgba(1, 1, 1, 1);
-
+    let position = Position { x: 1, y: 1 };
     myapp_actions
         .interact(
             DefaultParameters {
                 player_override: Option::None,
                 system_override: Option::None,
                 area_hint: Option::None,
-                position: Position { x: 1, y: 1 },
+                position,
                 color: color,
             },
         );
 
-    let pixel_1_1: Pixel = world.read_model((1, 1));
+    let pixel_1_1: Pixel = world.read_model(position);
 
     assert(pixel_1_1.color == color, 'should be the color');
     //println!("Passed test");

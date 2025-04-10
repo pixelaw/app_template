@@ -1,13 +1,11 @@
-use pixelaw::core::utils::{DefaultParameters};
+use pixelaw::core::utils::{DefaultParameters, Position};
 use starknet::{ContractAddress};
 
 #[derive(Copy, Drop, Serde)]
 #[dojo::model]
 pub struct ClickGame {
     #[key]
-    x: u16,
-    #[key]
-    y: u16,
+    position: Position,
     pub last_player: ContractAddress,
 }
 
@@ -55,8 +53,8 @@ pub mod myapp_actions {
             let position = default_params.position;
 
             // Load the Pixel
-            let mut pixel: Pixel = core_world.read_model((position.x, position.y));
-            let mut game: ClickGame = app_world.read_model((position.x, position.y));
+            let mut pixel: Pixel = core_world.read_model(position);
+            let mut game: ClickGame = app_world.read_model(position);
 
             // Check that its not the same player clicking
             assert!(
@@ -79,8 +77,7 @@ pub mod myapp_actions {
                     player,
                     system,
                     PixelUpdate {
-                        x: position.x,
-                        y: position.y,
+                        position,
                         color: Option::Some(default_params.color),
                         timestamp: Option::None,
                         text: Option::Some(current_count.into()),
