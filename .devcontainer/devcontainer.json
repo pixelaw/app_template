@@ -1,6 +1,6 @@
 {
   "name": "My Project",
-  "image": "ghcr.io/pixelaw/core:0.6.31",
+  "image": "ghcr.io/pixelaw/core:0.7.7",
   "forwardPorts": [
     5050,
     8080,
@@ -16,7 +16,7 @@
     "PUBLIC_RPC_URL": "http://127.0.0.1:5050",
     "PUBLIC_TORII_URL": "http://127.0.0.1:8080",
     "PUBLIC_RELAY_URL": "http://127.0.0.1:8080",
-    "WORLD_ADDRESS": "0x01d09b5e00f376337603943fc12715e439e91c0039f353b1cc48bb278dfa99d5",
+    "WORLD_ADDRESS": "0x06187e6ecbeba16f0ca4cbf17ea3887ff4abad114d0e345b5d6987edaf2009f4",
     "WORLD_ID": "local",
     "SERVER_PORT": "3000",
     // For web
@@ -32,9 +32,9 @@
       // Set *default* container specific settings.json values on container create.
       "settings": {
         "cairo1.enableLanguageServer": true,
-        "cairo1.languageServerPath": "${userHome}/.asdf/installs/dojo/1.4.0/bin/dojo-language-server",
+        "cairo1.languageServerPath": "${userHome}/.asdf/installs/dojo/1.5.0/bin/dojo-language-server",
         "cairo1.enableScarb": true,
-        "cairo1.scarbPath": "${userHome}/.asdf/installs/scarb/2.9.4/bin/scarb",
+        "cairo1.scarbPath": "${userHome}/.asdf/installs/scarb/2.10.1/bin/scarb",
         "lldb.executable": "/usr/bin/lldb",
         // VS Code don't watch files under ./target
         "files.watcherExclude": {
