@@ -52,12 +52,12 @@ fn test_myapp_actions() {
     // Deploy everything
     let (mut world, _core_actions, player_1, _player_2) = setup_core();
     //println!("Started test");
-
+    set_caller(player_1);
+    
     println!("1");
     // Deploy MyApp actions
     let myapp_actions = deploy_app(ref world);
 
-    set_caller(player_1);
 
     let color = encode_rgba(1, 1, 1, 1);
     let position = Position { x: 1, y: 1 };
