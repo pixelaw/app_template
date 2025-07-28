@@ -8,7 +8,7 @@ This is a **PixeLAW App Template** - a blockchain-based game development templat
 
 **Core Technologies:**
 - **Cairo** (v2.9.4) - Smart contract programming language for Starknet
-- **Dojo Framework** (v1.4.0) - ECS (Entity Component System) framework for blockchain games
+- **Dojo Framework** (v1.5.1) - ECS (Entity Component System) framework for blockchain games
 - **Starknet** - Layer 2 blockchain platform
 - **Scarb** (v2.9.4) - Package manager and build tool for Cairo
 
