@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "pixelaw-docs-mcp": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "pixelaw-docs-mcp"
+      ],
+      "env": {}
+    }
+  }
+}
